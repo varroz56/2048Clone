@@ -27,6 +27,8 @@ window.onload = function(){
     window.focus();
 //call resize function to set the canvas size to fit to the browser's window
     resize();
+// add event listener to follow window resize and call resize function
+    window.addEventListener("resize", resize, false);
 }
 //create resize function to calibrate the canvas size to any window size
 function resize(){
