@@ -39,12 +39,12 @@ var Game = new Phaser.Class({
                     tileValue: 0,
                     tileSprite: emptyTile,
                     //declare that the tile is not on maximum level/value
-                    upgradeable : true
+                    upgradeable: true
                 }
 
             }
         }
-        //add the first two tiles to the polayfield
+        //add the first two tiles to the playfield
         this.addTile();
         this.addTile();
 
@@ -54,14 +54,14 @@ var Game = new Phaser.Class({
         return relativePosition * (gameOptions.tileSize + gameOptions.tileSpacing) + gameOptions.tileSize / 2 + gameOptions.tileSpacing;
     },
     //create addTile function to add a not empty tile to the field
-    addTile: function(){
+    addTile: function () {
         //Need to determine the empty tiles positions to randomly put a number 2 on one of them
         //create emptyTiles array to store row and coloumn informations
-        var emptyTiles= [];
+        var emptyTiles = [];
         //iterate through the playFieldArray to check if the tile value is 0
-        for (var i=0; i<gameOptions.playFieldSize; i++){
-            for (var j=0; j<gameOptions.playFieldSize; j++){
-                if(this.playFieldArray[i][j].tileValue==0){
+        for (var i = 0; i < gameOptions.playFieldSize; i++) {
+            for (var j = 0; j < gameOptions.playFieldSize; j++) {
+                if (this.playFieldArray[i][j].tileValue == 0) {
                     //tile value is 0, so need to add to the array
                     emptyTiles.push({
                         row: i,
@@ -72,13 +72,13 @@ var Game = new Phaser.Class({
         }
         //Now have the array of the position of the empty tiles
         //create randomTile variable and using Phaser random utility get a random tile info
-        var randomTile = Phaser.Utils.Array.GetRandomElement(emptyTiles);
+        var randomTile = Phaser.Utils.Array.GetRandom(emptyTiles);
         //now need to change the playfield array given tile's attributes
         //set tilevalue to 1 as this is the number two is the first level
-        this.playFieldArray[randomTile.row][randomTile.col].tileValue=1;
+        this.playFieldArray[randomTile.row][randomTile.col].tileValue = 1;
         //make it visible
-        this.playFieldArray[randomTile.row][randomTile.col].tileSprite.visible=true;
-        this.playFieldArray[randomTile.row][randomTile.col].tileSprite.alpha=1;
+        this.playFieldArray[randomTile.row][randomTile.col].tileSprite.visible = true;
+        this.playFieldArray[randomTile.row][randomTile.col].tileSprite.alpha = 1;
         //choose the first frame of the spritesheet(starting at 0)
         this.playFieldArray[randomTile.row][randomTile.col].tileSprite.setFrame(0);
     },
