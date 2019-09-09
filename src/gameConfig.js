@@ -3,8 +3,8 @@ var game;
 //to be able to change later on easely
 var gameOptions = {
     //set tile size and spacing
-    tileSize: 150,
-    tileSpacing: 30,
+    tileSize: 200,
+    tileSpacing: 10,
     //as the game playfield is square
     playFieldSize: 4
 }
