@@ -123,13 +123,13 @@ var Game = new Phaser.Class({
         //using vectorial calculation to determine the movement direction
         //need to store the start and end coordinates
         var startX = event.downX;
-        console.log(startX);
+
         var startY = event.downY;
-        console.log(startY);
+
         var endX = event.upX;
-        console.log(endX);
+
         var endY = event.upY;
-        console.log(endY);
+
         //need two things: the steepness and the difference of the end and start coordinates
         //if the delta X is 0 can not divide with it; that is a vertical movement up or down
         var deltaX = endX - startX;
@@ -186,19 +186,141 @@ var Game = new Phaser.Class({
 
     //create moveTiles function to move tiles upon user input
     moveTiles: function (str) {
+        //to decide if tiles can move, need to go through the playFieldArray 
+        //opposite way as the user input and check tile by tile if that can 
+        //move to an empty tile or to upgrade an existing tile or it can't move
         switch (str) {
             case "left":
-                console.log("moving left");
+                //iterate througproph the playfield, start from the second col as first can't move
+                for (var j = 0; j < gameOptions.playFieldSize; j++) {
+                    for (var i = 1; i < gameOptions.playFieldSize; i++) {
+                        //check if the tile empty
+                        if (!this.playFieldArray[i][j].tileValue == 0) {
+                            //check all the tiles on the left start with the biggest distance
+                            for (var k = 0; k < j; k++) {
+                                //if there is an empty tile
+                                if (this.playFieldArray[i][k].tileValue == 0) {
+                                    //call moveTile function
+                                    console.log("from position " + i + " , " + j)
+                                    this.moveTile("left", k);
+                                    //move on to the next not empty tile
+                                    break;
+                                } else {
+                                    //if there is no empty tile but there is an upgradeable one, call upgradeTile
+                                    if (this.playFieldArray[i][k].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
+
+                                        this.upgradeTile("left", i, j, k);
+                                        //move on to the next not enmpty tile
+                                        break;
+                                    }
+
+                                }
+                            }
+                        }
+
+                    }
+                }
                 break;
             case "down":
-                console.log("moving down");
+                //stat from second to last row
+                for (var i = gameOptions.playFieldSize - 2; i > -1; i--) {
+                    for (var j = 0; j < gameOptions.playFieldSize; j++) {
+
+                        if (!this.playFieldArray[i][j].tileValue == 0) {
+                            for (var k = gameOptions.playFieldSize - 1; k > i; k--) {
+
+                                if (this.playFieldArray[k][j].tileValue == 0) {
+                                    console.log("from position " + i + " , " + j)
+                                    this.moveTile("down", k);
+                                    break;
+                                }
+                                //if the previous tile is not empty
+                                else {
+                                    //check if they are the same value and if the previous one upgradeable
+                                    if (this.playFieldArray[k][j].tileValue == this.playFieldArray[i][j].tileValue && this.playFieldArray[k][j].upgradeable) {
+
+                                        this.upgradeTile("down", i, j, k);
+                                        break;
+                                    }
+                                    // any other case doesn't affect this tile
+                                }
+                            }
+                        }
+
+                    }
+                }
                 break;
             case "right":
-                console.log("moving right");
+
+
+                for (var j = gameOptions.playFieldSize - 2; j > -1; j--) {
+
+                    for (var i = 0; i < gameOptions.playFieldSize; i++) {
+
+                        if (!this.playFieldArray[i][j].tileValue == 0) {
+                            for (var k = gameOptions.playFieldSize - 1; k > j; k--) {
+                                //if the previus tile empty, move the tile to that position
+                                if (this.playFieldArray[i][k].tileValue == 0) {
+                                    console.log("from position " + i + " , " + j)
+                                    this.moveTile("right", k);
+                                    break;
+                                }
+                                //if the previous tile is not empty
+                                else {
+                                    //check if they are the same value and if the previous one upgradeable
+                                    if (this.playFieldArray[i][k].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
+
+                                        this.upgradeTile("right", i, j, k);
+                                        break;
+                                    }
+                                    // any other case doesn't affect this tile
+                                }
+                            }
+                        }
+
+                    }
+                }
                 break;
             case "up":
-                console.log("moving up");
+
+
+                for (var i = 1; i < gameOptions.playFieldSize; i++) {
+                    for (var j = 0; j < gameOptions.playFieldSize; j++) {
+
+                        if (!this.playFieldArray[i][j].tileValue == 0) {
+                            for (var k = 0; k < i; k++) {
+                                //if the previus tile empty, move the tile to that position
+                                if (this.playFieldArray[k][j].tileValue == 0) {
+                                    console.log("from position " + i + " , " + j)
+                                    this.moveTile("up", k);
+                                    break;
+                                }
+                                //if the previous tile is not empty
+                                else {
+                                    //check if they are the same value and if the previous one upgradeable
+                                    if (this.playFieldArray[k][j].tileValue == this.playFieldArray[i][j].tileValue && this.playFieldArray[k][j].upgradeable) {
+
+                                        this.upgradeTile("up", i, j, k);
+                                        break;
+                                    }
+                                    // any other case doesn't affect this tile
+                                }
+                            }
+                        }
+
+                    }
+                }
                 break;
         }
+    },
+    //create moveTile to move individual tiles taking a direction string and the end position
+    moveTile: function (str, k) {
+        console.log("moveTile " + str + " to " + k);
+    },
+    //create upgradeTile function to upgrade two tiles in movement taking a direction string and 
+    upgradeTile: function (str, i, j, k) {
+        console.log("upgrade tiles " + str + " from " + i + " , " + j + " to " + k);
     }
+
+
 });
