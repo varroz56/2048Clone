@@ -134,7 +134,7 @@ var Game = new Phaser.Class({
         //if the delta X is 0 can not divide with it; that is a vertical movement up or down
         var deltaX = endX - startX;
         var steepness = (endY - startY) / (endX - startX);
-        
+
         if (deltaX == 0) {
             //if delta Y =0 too, there was no movement just click or touch, nothing to happen
             var deltaY = endY - startY;
@@ -144,12 +144,12 @@ var Game = new Phaser.Class({
             }
             //if delta y less than 0 then it's an upwards movement
             else if (deltaY < 0) {
-                this.moveTiles("up");
+                this.moveTiles("down");
                 return;
             }
             //if delta y more than 0 then it's an downwards movement
-            else(deltaY > 0) {
-                this.moveTiles("down");
+            else {
+                this.moveTiles("up");
                 return;
             }
         }
@@ -158,38 +158,47 @@ var Game = new Phaser.Class({
             //if delta x positive
             if (deltaX > 0) {
                 if (steepness > 1) {
-                    this.moveTiles("up");
+                    this.moveTiles("down");
                     return;
                 } else if (steepness > -1) {
                     this.moveTiles("right");
                     return;
                 } else {
-                    this.moveTiles("down");
+                    this.moveTiles("up");
                     return;
                 }
-            }//if delta x negative 
+            } //if delta x negative 
             else {
                 if (steepness <= -1) {
-                    this.moveTiles("up");
+                    this.moveTiles("down");
                     return;
                 } else if (steepness < 1) {
                     this.moveTiles("left");
                     return;
                 } else {
-                    this.moveTiles("down");
+                    this.moveTiles("up");
                     return;
                 }
             }
         }
 
     },
-    /*
-     //create moveTiles function to move tiles upon user input
-     moveTiles: function(str){
-         switch (str){
-             case "left":
-                 console.log("moving left");
-                 break;
-         }
-     }*/
+
+    //create moveTiles function to move tiles upon user input
+    moveTiles: function (str) {
+        switch (str) {
+            case "left":
+                console.log("moving left");
+                break;
+            case "down":
+                console.log("moving down");
+                break;
+            case "right":
+                console.log("moving right");
+                break;
+            case "up":
+                console.log("moving up");
+                break;
+        }
+    }
 });
