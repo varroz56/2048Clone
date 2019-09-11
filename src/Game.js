@@ -95,24 +95,19 @@ var Game = new Phaser.Class({
             //If the user pressed a or the left arrow
             case "KeyA":
             case "ArrowLeft":
-                console.log("left");
-                this.addTile();
                 this.moveTiles("left");
                 break;
             case "KeyS":
             case "ArrowDown":
-                console.log("down");
-                this.addTile();
+                this.moveTiles("down");
                 break;
             case "KeyD":
             case "ArrowRight":
-                console.log("right");
-                this.addTile();
+                this.moveTiles("right");
                 break;
             case "KeyW":
             case "ArrowUp":
-                console.log("up");
-                this.addTile();
+                this.moveTiles("up");
                 break;
 
         }
@@ -202,7 +197,7 @@ var Game = new Phaser.Class({
                                 if (this.playFieldArray[i][k].tileValue == 0) {
                                     //call moveTile function
                                     console.log("from position " + i + " , " + j)
-                                    this.moveTile("left",i, j, k);
+                                    this.moveTile("left", i, j, k);
                                     //move on to the next not empty tile
                                     break;
                                 } else {
@@ -231,7 +226,7 @@ var Game = new Phaser.Class({
 
                                 if (this.playFieldArray[k][j].tileValue == 0) {
                                     console.log("from position " + i + " , " + j)
-                                    this.moveTile("down",i, j, k);
+                                    this.moveTile("down", i, j, k);
                                     break;
                                 }
                                 //if the previous tile is not empty
@@ -262,7 +257,7 @@ var Game = new Phaser.Class({
                                 //if the previus tile empty, move the tile to that position
                                 if (this.playFieldArray[i][k].tileValue == 0) {
                                     console.log("from position " + i + " , " + j)
-                                    this.moveTile("right",i, j, k);
+                                    this.moveTile("right", i, j, k);
                                     break;
                                 }
                                 //if the previous tile is not empty
@@ -292,7 +287,7 @@ var Game = new Phaser.Class({
                                 //if the previus tile empty, move the tile to that position
                                 if (this.playFieldArray[k][j].tileValue == 0) {
                                     console.log("from position " + i + " , " + j)
-                                    this.moveTile("up",i, j, k);
+                                    this.moveTile("up", i, j, k);
                                     break;
                                 }
                                 //if the previous tile is not empty
@@ -317,13 +312,23 @@ var Game = new Phaser.Class({
     moveTile: function (str, i, j, k) {
         console.log("moveTile " + str + " to " + k);
         //four directions
-        switch(str){
+        switch (str) {
             case "left":
+                //copy the tile to the empty tile
+                this.playFieldArray[i][k].tileValue = this.playFieldArray[i][j].tileValue;
+                this.playFieldArray[i][k].tileSprite.visible = true;
+                this.playFieldArray[i][k].tileSprite.alpha = true;
+                this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][j].tileValue - 1);
+                break;
 
             case "down":
             case "right":
             case "up":
         }
+
+        this.playFieldArray[i][j].tileSprite.visible = false;
+        this.playFieldArray[i][j].tileSprite.alpha = false;
+
     },
     //create upgradeTile function to upgrade two tiles in movement taking a direction string and 
     upgradeTile: function (str, i, j, k) {
