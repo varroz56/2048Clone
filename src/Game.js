@@ -202,7 +202,7 @@ var Game = new Phaser.Class({
                                 if (this.playFieldArray[i][k].tileValue == 0) {
                                     //call moveTile function
                                     console.log("from position " + i + " , " + j)
-                                    this.moveTile("left", k);
+                                    this.moveTile("left",i, j, k);
                                     //move on to the next not empty tile
                                     break;
                                 } else {
@@ -231,7 +231,7 @@ var Game = new Phaser.Class({
 
                                 if (this.playFieldArray[k][j].tileValue == 0) {
                                     console.log("from position " + i + " , " + j)
-                                    this.moveTile("down", k);
+                                    this.moveTile("down",i, j, k);
                                     break;
                                 }
                                 //if the previous tile is not empty
@@ -262,7 +262,7 @@ var Game = new Phaser.Class({
                                 //if the previus tile empty, move the tile to that position
                                 if (this.playFieldArray[i][k].tileValue == 0) {
                                     console.log("from position " + i + " , " + j)
-                                    this.moveTile("right", k);
+                                    this.moveTile("right",i, j, k);
                                     break;
                                 }
                                 //if the previous tile is not empty
@@ -292,7 +292,7 @@ var Game = new Phaser.Class({
                                 //if the previus tile empty, move the tile to that position
                                 if (this.playFieldArray[k][j].tileValue == 0) {
                                     console.log("from position " + i + " , " + j)
-                                    this.moveTile("up", k);
+                                    this.moveTile("up",i, j, k);
                                     break;
                                 }
                                 //if the previous tile is not empty
@@ -314,8 +314,16 @@ var Game = new Phaser.Class({
         }
     },
     //create moveTile to move individual tiles taking a direction string and the end position
-    moveTile: function (str, k) {
+    moveTile: function (str, i, j, k) {
         console.log("moveTile " + str + " to " + k);
+        //four directions
+        switch(str){
+            case "left":
+
+            case "down":
+            case "right":
+            case "up":
+        }
     },
     //create upgradeTile function to upgrade two tiles in movement taking a direction string and 
     upgradeTile: function (str, i, j, k) {
