@@ -44,28 +44,13 @@ var Game = new Phaser.Class({
 
             }
         }
-        //add keyboard input listener to get direction
-        this.input.keyboard.on("keyup_A",  function(event){
-            console.log("left");
-            this.addTile();
-         }, this);
-         this.input.keyboard.on("keyup_S",  function(event){
-            console.log("down");
-            this.addTile();
-         }, this);
-         this.input.keyboard.on("keyup_D",  function(event){
-            console.log("right");
-            this.addTile();
-         }, this);
-         this.input.keyboard.on("keyup_W",  function(event){
-            console.log("up");
-            this.addTile();
-         }, this);
+        //call keyInput function to handle all permitted keystrokes
+        this.input.keyboard.on("keydown", this.keyInput, this);
         //add the first two tiles to the playfield
         this.addTile();
         this.addTile();
-        
-       
+
+
 
     },
     //create tileCoordinate function to get a tile horizontal or vertical positon on the canvas calculating from tile size, spacing and using the its relative position on the grid
@@ -101,6 +86,30 @@ var Game = new Phaser.Class({
         //choose the first frame of the spritesheet(starting at 0)
         this.playFieldArray[randomTile.row][randomTile.col].tileSprite.setFrame(0);
     },
-    
-    
+    keyInput: function (event) {
+        switch (event.code) {
+            case "KeyA":
+            case "ArrowLeft":
+                console.log("left");
+                this.addTile();
+                break;
+            case "KeyS":
+            case "ArrowDown":
+                console.log("down");
+                this.addTile();
+                break;
+            case "KeyD":
+            case "ArrowRight":
+                console.log("right");
+                this.addTile();
+                break;
+            case "KeyW":
+            case "ArrowUp":
+                console.log("up");
+                this.addTile();
+                break;
+
+        }
+    }
+
 });
