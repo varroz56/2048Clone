@@ -46,6 +46,8 @@ var Game = new Phaser.Class({
         }
         //call keyInput function to handle all permitted keystrokes
         this.input.keyboard.on("keydown", this.keyInput, this);
+        //add input listener for pointer
+        this.input.on("pointerup", this.mouseInput, this);
         //add the first two tiles to the playfield
         this.addTile();
         this.addTile();
@@ -86,12 +88,16 @@ var Game = new Phaser.Class({
         //choose the first frame of the spritesheet(starting at 0)
         this.playFieldArray[randomTile.row][randomTile.col].tileSprite.setFrame(0);
     },
+    //create keyInput to simplify keyboard inputs and to call th moveTiles function later on
     keyInput: function (event) {
+        //use switch to handle the four cases
         switch (event.code) {
+            //If the user pressed a or the left arrow
             case "KeyA":
             case "ArrowLeft":
                 console.log("left");
                 this.addTile();
+                this.moveTiles("left");
                 break;
             case "KeyS":
             case "ArrowDown":
@@ -110,6 +116,80 @@ var Game = new Phaser.Class({
                 break;
 
         }
-    }
 
+    },
+    //create mouseInput function to call move tiles upon mouse or swipe input
+    mouseInput: function (event) {
+        //using vectorial calculation to determine the movement direction
+        //need to store the start and end coordinates
+        var startX = event.downX;
+        console.log(startX);
+        var startY = event.downY;
+        console.log(startY);
+        var endX = event.upX;
+        console.log(endX);
+        var endY = event.upY;
+        console.log(endY);
+        //need two things: the steepness and the difference of the end and start coordinates
+        //if the delta X is 0 can not divide with it; that is a vertical movement up or down
+        var deltaX = endX - startX;
+        var steepness = (endY - startY) / (endX - startX);
+        
+        if (deltaX == 0) {
+            //if delta Y =0 too, there was no movement just click or touch, nothing to happen
+            var deltaY = endY - startY;
+            if (deltaY == 0) {
+                console.log("no movement");
+                return;
+            }
+            //if delta y less than 0 then it's an upwards movement
+            else if (deltaY < 0) {
+                this.moveTiles("up");
+                return;
+            }
+            //if delta y more than 0 then it's an downwards movement
+            else(deltaY > 0) {
+                this.moveTiles("down");
+                return;
+            }
+        }
+        //have 2*3 cases if delta x not 0
+        else {
+            //if delta x positive
+            if (deltaX > 0) {
+                if (steepness > 1) {
+                    this.moveTiles("up");
+                    return;
+                } else if (steepness > -1) {
+                    this.moveTiles("right");
+                    return;
+                } else {
+                    this.moveTiles("down");
+                    return;
+                }
+            }//if delta x negative 
+            else {
+                if (steepness <= -1) {
+                    this.moveTiles("up");
+                    return;
+                } else if (steepness < 1) {
+                    this.moveTiles("left");
+                    return;
+                } else {
+                    this.moveTiles("down");
+                    return;
+                }
+            }
+        }
+
+    },
+    /*
+     //create moveTiles function to move tiles upon user input
+     moveTiles: function(str){
+         switch (str){
+             case "left":
+                 console.log("moving left");
+                 break;
+         }
+     }*/
 });
