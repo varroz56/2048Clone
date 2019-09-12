@@ -181,8 +181,11 @@ var Game = new Phaser.Class({
 
     //create moveTiles function to move tiles upon user input
     moveTiles: function (str) {
+        console.clear();
         //create wasMove variable to check if any tiles moved or upgraded
         var wasMove = false;
+        //create tileInWay variable to mintor if there is a tile in the way to upgradeable
+        var tileInWay = false;
         //to decide if tiles can move, need to go through the playFieldArray 
         //opposite way as the user input and check tile by tile if that can 
         //move to an empty tile or to upgrade an existing tile or it can't move
@@ -206,11 +209,19 @@ var Game = new Phaser.Class({
                                 } else {
                                     //if there is no empty tile but there is an upgradeable one, call upgradeTile
                                     if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
-
-                                        this.upgradeTile("left", i, j, k);
-                                        wasMove = true;
-                                        //move on to the next not enmpty tile
-                                        break;
+                                        tileInWay=false;
+                                        for (var l = k + 1; l < j; l++) {
+                                            if (this.playFieldArray[i][l].tileValue != 0) {
+                                                tileInWay = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!tileInWay) {
+                                            this.upgradeTile("left", i, j, k);
+                                            wasMove = true;
+                                            //move on to the next not enmpty tile
+                                            break;
+                                        }
                                     }
 
                                 }
@@ -238,10 +249,18 @@ var Game = new Phaser.Class({
                                 else {
                                     //check if they are the same value and if the previous one upgradeable
                                     if (this.playFieldArray[k][j].tileValue == this.playFieldArray[i][j].tileValue && this.playFieldArray[k][j].upgradeable) {
-
-                                        this.upgradeTile("down", i, j, k);
-                                        wasMove = true;
-                                        break;
+                                        tileInWay=false;
+                                        for (var l = k - 1; l > i; l--) {
+                                            if (this.playFieldArray[l][j].tileValue != 0) {
+                                                tileInWay = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!tileInWay) {
+                                            this.upgradeTile("down", i, j, k);
+                                            wasMove = true;
+                                            break;
+                                        }
                                     }
                                     // any other case doesn't affect this tile
                                 }
@@ -271,10 +290,18 @@ var Game = new Phaser.Class({
                                 else {
                                     //check if they are the same value and if the previous one upgradeable
                                     if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
-
-                                        this.upgradeTile("right", i, j, k);
-                                        wasMove = true;
-                                        break;
+                                        tileInWay=false;
+                                        for (var l = k - 1; l > j; l--) {
+                                            if (this.playFieldArray[i][l].tileValue != 0) {
+                                                tileInWay = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!tileInWay) {
+                                            this.upgradeTile("right", i, j, k);
+                                            wasMove = true;
+                                            break;
+                                        }
                                     }
                                     // any other case doesn't affect this tile
                                 }
@@ -303,10 +330,18 @@ var Game = new Phaser.Class({
                                 else {
                                     //check if they are the same value and if the previous one upgradeable
                                     if (this.playFieldArray[k][j].tileValue == this.playFieldArray[i][j].tileValue && this.playFieldArray[k][j].upgradeable) {
-
-                                        this.upgradeTile("up", i, j, k);
-                                        wasMove = true;
-                                        break;
+                                        tileInWay=false;
+                                        for (var l = k + 1; l < i; l++) {
+                                            if (this.playFieldArray[l][j].tileValue != 0) {
+                                                tileInWay = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!tileInWay) {
+                                            this.upgradeTile("up", i, j, k);
+                                            wasMove = true;
+                                            break;
+                                        }
                                     }
                                     // any other case doesn't affect this tile
                                 }
@@ -325,6 +360,7 @@ var Game = new Phaser.Class({
                     this.playFieldArray[i][j].upgradeable = true;
                 }
             }
+            
         }
 
     },
