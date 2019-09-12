@@ -181,6 +181,8 @@ var Game = new Phaser.Class({
 
     //create moveTiles function to move tiles upon user input
     moveTiles: function (str) {
+        //create wasMove variable to check if any tiles moved or upgraded
+        var wasMove = false;
         //to decide if tiles can move, need to go through the playFieldArray 
         //opposite way as the user input and check tile by tile if that can 
         //move to an empty tile or to upgrade an existing tile or it can't move
@@ -198,6 +200,7 @@ var Game = new Phaser.Class({
                                     //call moveTile function
                                     console.log("from position " + i + " , " + j)
                                     this.moveTile("left", i, j, k);
+                                    wasMove = true;
                                     //move on to the next not empty tile
                                     break;
                                 } else {
@@ -205,6 +208,7 @@ var Game = new Phaser.Class({
                                     if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
 
                                         this.upgradeTile("left", i, j, k);
+                                        wasMove = true;
                                         //move on to the next not enmpty tile
                                         break;
                                     }
@@ -227,6 +231,7 @@ var Game = new Phaser.Class({
                                 if (this.playFieldArray[k][j].tileValue == 0) {
                                     console.log("from position " + i + " , " + j)
                                     this.moveTile("down", i, j, k);
+                                    wasMove = true;
                                     break;
                                 }
                                 //if the previous tile is not empty
@@ -235,6 +240,7 @@ var Game = new Phaser.Class({
                                     if (this.playFieldArray[k][j].tileValue == this.playFieldArray[i][j].tileValue && this.playFieldArray[k][j].upgradeable) {
 
                                         this.upgradeTile("down", i, j, k);
+                                        wasMove = true;
                                         break;
                                     }
                                     // any other case doesn't affect this tile
@@ -258,6 +264,7 @@ var Game = new Phaser.Class({
                                 if (this.playFieldArray[i][k].tileValue == 0) {
                                     console.log("from position " + i + " , " + j)
                                     this.moveTile("right", i, j, k);
+                                    wasMove = true;
                                     break;
                                 }
                                 //if the previous tile is not empty
@@ -266,6 +273,7 @@ var Game = new Phaser.Class({
                                     if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
 
                                         this.upgradeTile("right", i, j, k);
+                                        wasMove = true;
                                         break;
                                     }
                                     // any other case doesn't affect this tile
@@ -288,6 +296,7 @@ var Game = new Phaser.Class({
                                 if (this.playFieldArray[k][j].tileValue == 0) {
                                     console.log("from position " + i + " , " + j)
                                     this.moveTile("up", i, j, k);
+                                    wasMove = true;
                                     break;
                                 }
                                 //if the previous tile is not empty check if it's not upgradeable
@@ -296,6 +305,7 @@ var Game = new Phaser.Class({
                                     if (this.playFieldArray[k][j].tileValue == this.playFieldArray[i][j].tileValue && this.playFieldArray[k][j].upgradeable) {
 
                                         this.upgradeTile("up", i, j, k);
+                                        wasMove = true;
                                         break;
                                     }
                                     // any other case doesn't affect this tile
@@ -308,20 +318,22 @@ var Game = new Phaser.Class({
                 break;
         }
         //end of the turn, add a new tile and set every tile to ugrade to true
-        this.addTile();
-        for(var i=0; i<gameOptions.playFieldSize; i++){
-            for(var j =0; j< gameOptions.playFieldSize; j++){
-                this.playFieldArray[i][j].upgradeable= true;
+        if (wasMove) {
+            this.addTile();
+            for (var i = 0; i < gameOptions.playFieldSize; i++) {
+                for (var j = 0; j < gameOptions.playFieldSize; j++) {
+                    this.playFieldArray[i][j].upgradeable = true;
+                }
             }
         }
-        
+
     },
     //create moveTile to move individual tiles taking a direction string and the end position
     moveTile: function (str, i, j, k) {
         console.log("moveTile " + str + " to " + k);
         console.log(this.playFieldArray[i][j].tileValue);
 
-        
+
         //four directions
         switch (str) {
             case "left":
@@ -354,59 +366,73 @@ var Game = new Phaser.Class({
                 this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[i][j].tileValue - 1);
                 break;
         }
-        this.playFieldArray[i][j].tileValue=0;
+        this.playFieldArray[i][j].tileValue = 0;
         this.playFieldArray[i][j].tileSprite.visible = false;
         this.playFieldArray[i][j].tileSprite.alpha = 0;
-        
+
     },
     //create upgradeTile function to upgrade two tiles in movement taking a direction string and 
     upgradeTile: function (str, i, j, k) {
         console.log("upgrade tiles " + str + " from " + i + " , " + j + " to " + k);
         console.log(this.playFieldArray[i][j].tileValue);
-        
+
         console.log(this.playFieldArray[i][k].tileValue);
         //four directions
         switch (str) {
             case "left":
                 //copy the tile to the empty tile
-                this.playFieldArray[i][k].tileValue+=1;
-                
+                this.playFieldArray[i][k].tileValue += 1;
+
                 this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][k].tileValue - 1);
                 this.playFieldArray[i][k].tileSprite.visible = true;
                 this.playFieldArray[i][k].tileSprite.alpha = 1;
-                this.playFieldArray[i][k].upgradeable=false;
+                this.playFieldArray[i][k].upgradeable = false;
                 break;
 
             case "down":
                 //copy the tile to the empty tile
-                this.playFieldArray[k][j].tileValue+=1;
+                this.playFieldArray[k][j].tileValue += 1;
                 this.playFieldArray[k][j].tileSprite.visible = true;
                 this.playFieldArray[k][j].tileSprite.alpha = 1;
                 this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[k][j].tileValue - 1);
-                this.playFieldArray[i][k].upgradeable=false;
+                this.playFieldArray[k][j].upgradeable = false;
                 break;
             case "right":
                 //copy the tile to the empty tile
-                this.playFieldArray[i][k].tileValue+=1;
+                this.playFieldArray[i][k].tileValue += 1;
                 this.playFieldArray[i][k].tileSprite.visible = true;
                 this.playFieldArray[i][k].tileSprite.alpha = 1;
                 this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][k].tileValue - 1);
-                this.playFieldArray[i][k].upgradeable=false;
+                this.playFieldArray[i][k].upgradeable = false;
                 break;
-                case "up":
+            case "up":
                 //copy the tile to the empty tile
-                this.playFieldArray[k][j].tileValue+=1;
+                this.playFieldArray[k][j].tileValue += 1;
                 this.playFieldArray[k][j].tileSprite.visible = true;
                 this.playFieldArray[k][j].tileSprite.alpha = 1;
                 this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[k][j].tileValue - 1);
-                this.playFieldArray[i][k].upgradeable=false;
+                this.playFieldArray[k][j].upgradeable = false;
                 break;
         }
-        this.playFieldArray[i][j].tileValue=0;
+        this.playFieldArray[i][j].tileValue = 0;
         this.playFieldArray[i][j].tileSprite.visible = false;
         this.playFieldArray[i][j].tileSprite.alpha = 0;
-        
+
+    },
+    //create overYet function to handle the following situations:
+    //---the playfield full, no move possible
+    //---the playfield full, possible move exist but the user doesn't choose it
+    overYet: function (str) {
+        switch (str) {
+            case "Over":
+                console.log("game over");
+                break;
+            case "wrongMove":
+                console.log("try another movement");
+                break;
+        }
     }
+
 
 
 });
