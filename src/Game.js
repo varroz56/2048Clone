@@ -290,7 +290,7 @@ var Game = new Phaser.Class({
                                     this.moveTile("up", i, j, k);
                                     break;
                                 }
-                                //if the previous tile is not empty
+                                //if the previous tile is not empty check if it's not upgradeable
                                 else {
                                     //check if they are the same value and if the previous one upgradeable
                                     if (this.playFieldArray[k][j].tileValue == this.playFieldArray[i][j].tileValue && this.playFieldArray[k][j].upgradeable) {
@@ -307,7 +307,14 @@ var Game = new Phaser.Class({
                 }
                 break;
         }
+        //end of the turn, add a new tile and set every tile to ugrade to true
         this.addTile();
+        for(var i=0; i<gameOptions.playFieldSize; i++){
+            for(var j =0; j< gameOptions.playFieldSize; j++){
+                this.playFieldArray[i][j].upgradeable= true;
+            }
+        }
+        
     },
     //create moveTile to move individual tiles taking a direction string and the end position
     moveTile: function (str, i, j, k) {
@@ -367,6 +374,7 @@ var Game = new Phaser.Class({
                 this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][k].tileValue - 1);
                 this.playFieldArray[i][k].tileSprite.visible = true;
                 this.playFieldArray[i][k].tileSprite.alpha = 1;
+                this.playFieldArray[i][k].upgradeable=false;
                 break;
 
             case "down":
@@ -375,6 +383,7 @@ var Game = new Phaser.Class({
                 this.playFieldArray[k][j].tileSprite.visible = true;
                 this.playFieldArray[k][j].tileSprite.alpha = 1;
                 this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[k][j].tileValue - 1);
+                this.playFieldArray[i][k].upgradeable=false;
                 break;
             case "right":
                 //copy the tile to the empty tile
@@ -382,13 +391,15 @@ var Game = new Phaser.Class({
                 this.playFieldArray[i][k].tileSprite.visible = true;
                 this.playFieldArray[i][k].tileSprite.alpha = 1;
                 this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][k].tileValue - 1);
+                this.playFieldArray[i][k].upgradeable=false;
                 break;
-            case "up":
+                case "up":
                 //copy the tile to the empty tile
                 this.playFieldArray[k][j].tileValue+=1;
                 this.playFieldArray[k][j].tileSprite.visible = true;
                 this.playFieldArray[k][j].tileSprite.alpha = 1;
                 this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[k][j].tileValue - 1);
+                this.playFieldArray[i][k].upgradeable=false;
                 break;
         }
         this.playFieldArray[i][j].tileValue=0;
