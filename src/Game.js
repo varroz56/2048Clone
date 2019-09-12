@@ -202,7 +202,7 @@ var Game = new Phaser.Class({
                                     break;
                                 } else {
                                     //if there is no empty tile but there is an upgradeable one, call upgradeTile
-                                    if (this.playFieldArray[i][k].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
+                                    if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
 
                                         this.upgradeTile("left", i, j, k);
                                         //move on to the next not enmpty tile
@@ -263,7 +263,7 @@ var Game = new Phaser.Class({
                                 //if the previous tile is not empty
                                 else {
                                     //check if they are the same value and if the previous one upgradeable
-                                    if (this.playFieldArray[i][k].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
+                                    if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
 
                                         this.upgradeTile("right", i, j, k);
                                         break;
