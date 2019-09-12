@@ -188,7 +188,7 @@ var Game = new Phaser.Class({
             case "left":
                 //iterate througproph the playfield, start from the second col as first can't move
                 for (var j = 0; j < gameOptions.playFieldSize; j++) {
-                    for (var i = 1; i < gameOptions.playFieldSize; i++) {
+                    for (var i = 0; i < gameOptions.playFieldSize; i++) {
                         //check if the tile empty
                         if (!this.playFieldArray[i][j].tileValue == 0) {
                             //check all the tiles on the left start with the biggest distance
@@ -307,32 +307,94 @@ var Game = new Phaser.Class({
                 }
                 break;
         }
+        this.addTile();
     },
     //create moveTile to move individual tiles taking a direction string and the end position
     moveTile: function (str, i, j, k) {
         console.log("moveTile " + str + " to " + k);
+        console.log(this.playFieldArray[i][j].tileValue);
+
+        
         //four directions
         switch (str) {
             case "left":
                 //copy the tile to the empty tile
                 this.playFieldArray[i][k].tileValue = this.playFieldArray[i][j].tileValue;
                 this.playFieldArray[i][k].tileSprite.visible = true;
-                this.playFieldArray[i][k].tileSprite.alpha = true;
+                this.playFieldArray[i][k].tileSprite.alpha = 1;
                 this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][j].tileValue - 1);
                 break;
 
             case "down":
+                //copy the tile to the empty tile
+                this.playFieldArray[k][j].tileValue = this.playFieldArray[i][j].tileValue;
+                this.playFieldArray[k][j].tileSprite.visible = true;
+                this.playFieldArray[k][j].tileSprite.alpha = 1;
+                this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[i][j].tileValue - 1);
+                break;
             case "right":
+                //copy the tile to the empty tile
+                this.playFieldArray[i][k].tileValue = this.playFieldArray[i][j].tileValue;
+                this.playFieldArray[i][k].tileSprite.visible = true;
+                this.playFieldArray[i][k].tileSprite.alpha = 1;
+                this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][j].tileValue - 1);
+                break;
             case "up":
+                //copy the tile to the empty tile
+                this.playFieldArray[k][j].tileValue = this.playFieldArray[i][j].tileValue;
+                this.playFieldArray[k][j].tileSprite.visible = true;
+                this.playFieldArray[k][j].tileSprite.alpha = 1;
+                this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[i][j].tileValue - 1);
+                break;
         }
-
+        this.playFieldArray[i][j].tileValue=0;
         this.playFieldArray[i][j].tileSprite.visible = false;
-        this.playFieldArray[i][j].tileSprite.alpha = false;
-
+        this.playFieldArray[i][j].tileSprite.alpha = 0;
+        
     },
     //create upgradeTile function to upgrade two tiles in movement taking a direction string and 
     upgradeTile: function (str, i, j, k) {
         console.log("upgrade tiles " + str + " from " + i + " , " + j + " to " + k);
+        console.log(this.playFieldArray[i][j].tileValue);
+        
+        console.log(this.playFieldArray[i][k].tileValue);
+        //four directions
+        switch (str) {
+            case "left":
+                //copy the tile to the empty tile
+                this.playFieldArray[i][k].tileValue+=1;
+                
+                this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][k].tileValue - 1);
+                this.playFieldArray[i][k].tileSprite.visible = true;
+                this.playFieldArray[i][k].tileSprite.alpha = 1;
+                break;
+
+            case "down":
+                //copy the tile to the empty tile
+                this.playFieldArray[k][j].tileValue+=1;
+                this.playFieldArray[k][j].tileSprite.visible = true;
+                this.playFieldArray[k][j].tileSprite.alpha = 1;
+                this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[k][j].tileValue - 1);
+                break;
+            case "right":
+                //copy the tile to the empty tile
+                this.playFieldArray[i][k].tileValue+=1;
+                this.playFieldArray[i][k].tileSprite.visible = true;
+                this.playFieldArray[i][k].tileSprite.alpha = 1;
+                this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][k].tileValue - 1);
+                break;
+            case "up":
+                //copy the tile to the empty tile
+                this.playFieldArray[k][j].tileValue+=1;
+                this.playFieldArray[k][j].tileSprite.visible = true;
+                this.playFieldArray[k][j].tileSprite.alpha = 1;
+                this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[k][j].tileValue - 1);
+                break;
+        }
+        this.playFieldArray[i][j].tileValue=0;
+        this.playFieldArray[i][j].tileSprite.visible = false;
+        this.playFieldArray[i][j].tileSprite.alpha = 0;
+        
     }
 
 
