@@ -17,11 +17,29 @@ var Game = new Phaser.Class({
             frameHeight: gameOptions.tileSize
         });
         //load button image to the game memory
-        this.load.image("NGbtn", "assets/images/newGameBtn.png");
-        this.load.image("Sbtn", "assets/images/soundsBtn.png");
-        this.load.image("by3btn", "assets/images/3by3btn.png");
-        this.load.image("by4btn", "assets/images/4by4btn.png");
-        this.load.image("by5btn", "assets/images/5by5btn.png");
+        this.load.image("NGbtn", "assets/images/newGameBtn.png",{
+            width: gameOptions.tileSize,
+            height: 100
+        });
+        this.load.image("Sbtn", "assets/images/soundsBtn.png",{
+            width: gameOptions.tileSize,
+            height: 100
+        });
+        this.load.image("by3btn", "assets/images/3by3btn.png", {
+            //set the size of the tiles to correct canvas/window size
+            width: gameOptions.tileSize*4/3,
+            height: 100
+        });
+        this.load.image("by4btn", "assets/images/4by4btn.png", {
+            //set the size of the tiles to correct canvas/window size
+            width: gameOptions.tileSize*4/3,
+            height: 100
+        });
+        this.load.image("by5btn", "assets/images/5by5btn.png", {
+            //set the size of the tiles to correct canvas/window size
+            width: gameOptions.tileSize*4/3,
+            height: 100
+        });
 
     },
     // create create function to use the canvas as a grid and start the game adding the first tiles to it
@@ -76,18 +94,24 @@ var Game = new Phaser.Class({
         }, this);
         this.by3btn.on("pointerdown", function(){
             score = 0;
-            gameOptions.playFieldSize=3;
-            this.scene.restart();
+            var size = 3;
+            var n = size.toString();
+            sessionStorage.setItem("playFieldSize", n);
+            location.reload();
         }, this);
         this.by4btn.on("pointerdown", function(){
             score = 0;
-            gameOptions.playFieldSize=4;
-            this.scene.restart();
+            var size = 4;
+            var n = size.toString();
+            sessionStorage.setItem("playFieldSize", n);
+            location.reload();
         }, this);
         this.by5btn.on("pointerdown", function(){
             score = 0;
-            gameOptions.playFieldSize=5;
-            this.scene.restart();
+            var size = 5;
+            var n = size.toString();
+            sessionStorage.setItem("playFieldSize", n);
+            location.reload();
         }, this);
 
 
