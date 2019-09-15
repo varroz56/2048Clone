@@ -15,8 +15,9 @@ window.onload = function () {
         //Choosing Phaser canvas to use as a html canvas element
         type: Phaser.CANVAS,
         //set the square canvas size, given the size of the tiles and spacing around them
+        //give 200px to the height for menu buttons
         width: gameOptions.tileSize * gameOptions.playFieldSize + gameOptions.tileSpacing * (gameOptions.playFieldSize + 1),
-        height: gameOptions.tileSize * gameOptions.playFieldSize + gameOptions.tileSpacing * (gameOptions.playFieldSize + 1),
+        height: gameOptions.tileSize * gameOptions.playFieldSize + gameOptions.tileSpacing * (gameOptions.playFieldSize + 1)+200,
         //set backgroung color
         backgroundColor: 0x6c7177,
         //point to the Game scene located in the Game.js
