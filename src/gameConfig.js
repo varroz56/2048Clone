@@ -1,17 +1,21 @@
 //configure game variable 
 var game;
-//create score and scoretext global var to set and update score
+//create score and scoretext global var to set to update in pgrade function
 var score=0;
 var scoreText;
-
 //to be able to change later on easely
+
 var gameOptions = {
     //set tile size and spacing
     tileSize: 200,
     tileSpacing: 10,
-    //as the game playfield is square
-    playFieldSize: 4
+    //as the game playfield is square need only one
+    playFieldSize: playSize(),
+    //add menu button size
+    topBtnSize : 200,
+    byBtnSize :300
 }
+
 //set the configuration of the canvas when the window loads
 window.onload = function () {
     //create gameConfig to set the basic parameters for the canvas and to be able to change later on if needed 
@@ -27,6 +31,9 @@ window.onload = function () {
         //point to the Game scene located in the Game.js
         scene: [Game]
     };
+    
+    console.log(sessionStorage.getItem("playFieldSize"));
+    console.log(gameOptions.playFieldSize);
     game = new Phaser.Game(gameConfig);
     //make sure the game object is frontmost
     window.focus();
@@ -55,5 +62,14 @@ function resize() {
     else {
         canvas.style.width = (windowHeight * gameRatio) + "px";
         canvas.style.height = windowHeight + "px";
+    }
+}
+function playSize(){
+    var size = parseInt(sessionStorage.getItem("playFieldSize"));
+    if(size>0){
+        return size;
+    }
+    else{
+        return 4;
     }
 }
