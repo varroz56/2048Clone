@@ -12,8 +12,9 @@ var gameOptions = {
     //as the game playfield is square need only one
     playFieldSize: playSize(),
     //add menu button size
-    topBtnSize : 200,
-    byBtnSize :300
+    topBtnWidth : 200,
+    byBtnWidth :300,
+    btnHeight :100
 }
 
 //set the configuration of the canvas when the window loads
