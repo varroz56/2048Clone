@@ -1,5 +1,9 @@
 //configure game variable 
 var game;
+//create score and scoretext global var to set and update score
+var score=0;
+var scoreText;
+
 //to be able to change later on easely
 var gameOptions = {
     //set tile size and spacing

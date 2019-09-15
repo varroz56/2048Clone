@@ -30,9 +30,10 @@ var Game = new Phaser.Class({
         this.NGbtn = this.add.image(100,50,"NGbtn").setInteractive();
         this.Sbtn = this.add.image(750,50,"Sbtn").setInteractive();
         this.by3btn = this.add.image(130,150,"by3btn").setInteractive();
-        this.by5btn = this.add.image(422,150,"by4btn").setInteractive();
+        this.by4btn = this.add.image(422,150,"by4btn").setInteractive();
         this.by5btn = this.add.image(715,150,"by5btn").setInteractive();
-
+        //add scoretext
+        scoreText = this.add.text(290, 40, ' Your Score: 0',{fontSize: '32px', fill: '#facc78'});
         
         //Create array to store the tile position and tile values
         this.playFieldArray = [];
@@ -70,6 +71,22 @@ var Game = new Phaser.Class({
         
         //on btn click call restart function to setet the game
         this.NGbtn.on("pointerdown", function(){
+            score = 0;
+            this.scene.restart();
+        }, this);
+        this.by3btn.on("pointerdown", function(){
+            score = 0;
+            gameOptions.playFieldSize=3;
+            this.scene.restart();
+        }, this);
+        this.by4btn.on("pointerdown", function(){
+            score = 0;
+            gameOptions.playFieldSize=4;
+            this.scene.restart();
+        }, this);
+        this.by5btn.on("pointerdown", function(){
+            score = 0;
+            gameOptions.playFieldSize=5;
             this.scene.restart();
         }, this);
 
@@ -469,6 +486,9 @@ var Game = new Phaser.Class({
         this.playFieldArray[i][j].tileValue = 0;
         this.playFieldArray[i][j].tileSprite.visible = false;
         this.playFieldArray[i][j].tileSprite.alpha = 0;
+
+        score += 10;
+        scoreText.setText('Your Score: ' + score);
 
     },
     //create fullFilled function to check if theres a possible move when the playfield is full
