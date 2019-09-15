@@ -18,11 +18,21 @@ var Game = new Phaser.Class({
         });
         //load button image to the game memory
         this.load.image("NGbtn", "assets/images/newGameBtn.png");
+        this.load.image("Sbtn", "assets/images/soundsBtn.png");
+        this.load.image("by3btn", "assets/images/3by3btn.png");
+        this.load.image("by4btn", "assets/images/4by4btn.png");
+        this.load.image("by5btn", "assets/images/5by5btn.png");
+
     },
     // create create function to use the canvas as a grid and start the game adding the first tiles to it
     create: function () {
         //position image on the canvas and set to interactive to be able to act as button
         this.NGbtn = this.add.image(100,50,"NGbtn").setInteractive();
+        this.Sbtn = this.add.image(750,50,"Sbtn").setInteractive();
+        this.by3btn = this.add.image(130,150,"by3btn").setInteractive();
+        this.by5btn = this.add.image(422,150,"by4btn").setInteractive();
+        this.by5btn = this.add.image(715,150,"by5btn").setInteractive();
+
         
         //Create array to store the tile position and tile values
         this.playFieldArray = [];
