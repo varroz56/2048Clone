@@ -16,9 +16,14 @@ var Game = new Phaser.Class({
             frameWidth: gameOptions.tileSize,
             frameHeight: gameOptions.tileSize
         });
+        //load button image to the game memory
+        this.load.image("NGbtn", "assets/images/newGameBtn.png");
     },
     // create create function to use the canvas as a grid and start the game adding the first tiles to it
     create: function () {
+        //position image on the canvas and set to interactive to be able to act as button
+        this.NGbtn = this.add.image(100,50,"NGbtn").setInteractive();
+        
         //Create array to store the tile position and tile values
         this.playFieldArray = [];
         this.playFieldGroup = this.add.group();
@@ -52,6 +57,11 @@ var Game = new Phaser.Class({
         //add the first two tiles to the playfield
         this.addTile();
         this.addTile();
+        
+        //on btn click call restart function to setet the game
+        this.NGbtn.on("pointerdown", function(){
+            this.scene.restart();
+        }, this);
 
 
 
