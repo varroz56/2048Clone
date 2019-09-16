@@ -9,15 +9,16 @@ canvas {
 }
 
 body {
-  background-color: #6c7177;
-}
+  background-color: #CC3425;
+  margin: 0;
+  }
 
 header {
-  background-color: #6c7177 !important;
+  background-color: #CC3425;
 }
 
 footer {
-  background-color: #6c7177;
+  background-color: #CC3425;
   position: fixed;
   left: 0;
   bottom: 0;
