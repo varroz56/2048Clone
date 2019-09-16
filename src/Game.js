@@ -38,7 +38,7 @@ var Game = new Phaser.Class({
         this.setCurrentButtons();
         //add sound and if the sound was on before, play the music 
         piano = this.sound.add("piano");
-        if(musicState()){
+        if (musicState()) {
             piano.play({
                 //lower the default volume and loop the track
                 volume: .5,
@@ -51,7 +51,7 @@ var Game = new Phaser.Class({
             fill: '#facc78'
         });
         //add best scoretext
-        bestScore = this.add.text(this.buttonCoordinate(1, 2), 15, 'Best: '+ this.getBest(), {
+        bestScore = this.add.text(this.buttonCoordinate(1, 2), 15, 'Best: ' + this.getBest(), {
             fontSize: '32px',
             fill: '#facc78'
         });
@@ -137,22 +137,21 @@ var Game = new Phaser.Class({
         this.addTile();
 
     },
-    
+
     //create saveBest function to save best score to session storage
-    saveBest: function(){
-        if(score>sessionStorage.getItem("best")){
+    saveBest: function () {
+        if (score > sessionStorage.getItem("best")) {
             var n = score.toString();
             sessionStorage.setItem("best", n);
-    
+
         }
     },
     //create getBest function to read bst score from session storage
-    getBest: function(){
-        if(sessionStorage.getItem("best")>0){
+    getBest: function () {
+        if (sessionStorage.getItem("best") > 0) {
             var n = sessionStorage.getItem("best");
             return parseInt(n);
-        }
-        else{
+        } else {
             return 0;
         }
     },
@@ -560,28 +559,11 @@ var Game = new Phaser.Class({
         this.playFieldArray[i][j].tileSprite.alpha = 0;
 
     },
-    //create upgradeTile function to upgrade two tiles in movement taking a direction string and 
+    //create upgradeTile function to upgrade two tiles in movement taking a direction string and and three coordinates
     upgradeTile: function (str, i, j, k) {
         //four directions
         switch (str) {
             case "left":
-                //copy the tile to the empty tile
-                this.playFieldArray[i][k].tileValue += 1;
-
-                this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][k].tileValue - 1);
-                this.playFieldArray[i][k].tileSprite.visible = true;
-                this.playFieldArray[i][k].tileSprite.alpha = 1;
-                this.playFieldArray[i][k].upgradeable = false;
-                break;
-
-            case "down":
-                //copy the tile to the empty tile
-                this.playFieldArray[k][j].tileValue += 1;
-                this.playFieldArray[k][j].tileSprite.visible = true;
-                this.playFieldArray[k][j].tileSprite.alpha = 1;
-                this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[k][j].tileValue - 1);
-                this.playFieldArray[k][j].upgradeable = false;
-                break;
             case "right":
                 //copy the tile to the empty tile
                 this.playFieldArray[i][k].tileValue += 1;
@@ -590,7 +572,9 @@ var Game = new Phaser.Class({
                 this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][k].tileValue - 1);
                 this.playFieldArray[i][k].upgradeable = false;
                 break;
+
             case "up":
+            case "down":
                 //copy the tile to the empty tile
                 this.playFieldArray[k][j].tileValue += 1;
                 this.playFieldArray[k][j].tileSprite.visible = true;
@@ -602,7 +586,7 @@ var Game = new Phaser.Class({
         this.playFieldArray[i][j].tileValue = 0;
         this.playFieldArray[i][j].tileSprite.visible = false;
         this.playFieldArray[i][j].tileSprite.alpha = 0;
-
+        //earn 10 points with the upgrade
         score += 10;
         scoreText.setText('Score: ' + score);
 
@@ -623,35 +607,25 @@ var Game = new Phaser.Class({
                 //exceptions the bottom line and the right side colas there is either right or down side missing
                 //bottom line
                 if ((i == (gameOptions.playFieldSize - 1)) && (j == gameOptions.playFieldSize - 1)) {
-                    console.log("No Possible Moves");
-                    console.log("GAME OVER");
                     return true;
                 } else if (this.playFieldArray[i][j].tileValue == 0) {
-                    console.log("there is an empty tile " + i + " , " + j);
-                    console.log(this.playFieldArray);
-                    console.log(this.playFieldArray[i][j].tileValue);
-
-
                     return false;
                 }
                 //bottom row
                 else if (i == gameOptions.playFieldSize - 1) {
                     if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i][j + 1].tileValue) {
-                        console.log("bottom line possible move");
                         return false;
                     }
                 }
                 //right col
                 else if (j == gameOptions.playFieldSize - 1) {
                     if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i + 1][j].tileValue) {
-                        console.log("right col possible move");
                         return false;
                     }
 
                 }
                 //for the other tiles need to check both
                 else if ((this.playFieldArray[i][j].tileValue == this.playFieldArray[i][k].tileValue) || (this.playFieldArray[i][j].tileValue == this.playFieldArray[l][j].tileValue)) {
-                    console.log("main area possible move");
                     return false;
                 }
             }
