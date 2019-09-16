@@ -12,8 +12,7 @@ var gameOptions = {
     //as the game playfield is square need only one
     playFieldSize: playSize(),
     //add menu button size
-    topBtnWidth : 200,
-    byBtnWidth :300,
+    btnWidth : 200,
     btnHeight :100
 }
 
