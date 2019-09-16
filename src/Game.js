@@ -16,43 +16,30 @@ var Game = new Phaser.Class({
             frameWidth: gameOptions.tileSize,
             frameHeight: gameOptions.tileSize
         });
-        //load button image to the game memory
-        this.load.image("NGbtn", "assets/images/newGameBtn.png",{
-            width: gameOptions.tileSize,
-            height: 100
-        });
-        this.load.image("Sbtn", "assets/images/soundsBtn.png",{
-            width: gameOptions.tileSize,
-            height: 100
-        });
-        this.load.image("by3btn", "assets/images/3by3btn.png", {
+        //load button spritesheet to the game memory
+        this.load.spritesheet("buttons", "assets/sprites/buttons.png", {
             //set the size of the tiles to correct canvas/window size
-            width: gameOptions.tileSize*4/3,
-            height: 100
+            frameWidth: gameOptions.btnWidth,
+            frameHeight: gameOptions.btnHeight
         });
-        this.load.image("by4btn", "assets/images/4by4btn.png", {
-            //set the size of the tiles to correct canvas/window size
-            width: gameOptions.tileSize*4/3,
-            height: 100
-        });
-        this.load.image("by5btn", "assets/images/5by5btn.png", {
-            //set the size of the tiles to correct canvas/window size
-            width: gameOptions.tileSize*4/3,
-            height: 100
-        });
-
     },
     // create create function to use the canvas as a grid and start the game adding the first tiles to it
     create: function () {
         //position image on the canvas and set to interactive to be able to act as button
-        this.NGbtn = this.add.image(100,50,"NGbtn").setInteractive();
-        this.Sbtn = this.add.image(750,50,"Sbtn").setInteractive();
-        this.by3btn = this.add.image(130,150,"by3btn").setInteractive();
-        this.by4btn = this.add.image(422,150,"by4btn").setInteractive();
-        this.by5btn = this.add.image(715,150,"by5btn").setInteractive();
-        //add scoretext
-        scoreText = this.add.text(290, 40, ' Your Score: 0',{fontSize: '32px', fill: '#facc78'});
+        this.NGbtn = this.add.sprite(this.buttonCoordinate(1,1),50,"buttons").setInteractive();
+        this.Sbtn = this.add.sprite(this.buttonCoordinate(1,3),50,"buttons").setInteractive();
+        this.by3btn = this.add.sprite(this.buttonCoordinate(2,1),150,"buttons").setInteractive();
+        this.by4btn = this.add.sprite(this.buttonCoordinate(2,2),150,"buttons").setInteractive();
+        this.by5btn = this.add.sprite(this.buttonCoordinate(2,3),150,"buttons").setInteractive();
         
+        this.NGbtn.setFrame(0);
+        this.Sbtn.setFrame(2);
+        this.by3btn.setFrame(3);
+        this.by4btn.setFrame(6);
+        this.by5btn.setFrame(7);
+//add scoretext
+        scoreText = this.add.text(this.buttonCoordinate(1,2), 40, ' Your Score: 0',{fontSize: '32px', fill: '#facc78'});
+          
         //Create array to store the tile position and tile values
         this.playFieldArray = [];
         this.playFieldGroup = this.add.group();
@@ -73,7 +60,7 @@ var Game = new Phaser.Class({
                     //set initial value
                     tileValue: 0,
                     tileSprite: emptyTile,
-                    //declare that the tile is not on maximum level/value
+                    //declare that the tile is not on maximum level/value;
                     upgradeable: true
                 }
 
@@ -117,6 +104,22 @@ var Game = new Phaser.Class({
 
 
     },
+    //create button coordinate function return an x coordinate based on row and position
+    //2 rows for menu and 1-3 positions
+    buttonCoordinate: function(row, pos){
+        var w = document.querySelector("canvas").width;
+        if(row == 1){
+            if(pos == 1){return w/8-5;}
+            else if(pos==2){return w/3-15;}
+            else if(pos == 3){return w/8*7;}
+        }
+        else if(row==2){
+            if(pos == 1){return w/8+10;}
+            else if(pos==2){return w/2;}
+            else if(pos == 3){return w/8*7;}
+
+        }
+    },
     //create tileCoordinate function to get a tile horizontal or vertical positon on the canvas calculating from tile size, spacing and using the its relative position on the grid
     tileCoordinate: function (relativePosition) {
         return relativePosition * (gameOptions.tileSize + gameOptions.tileSpacing) + gameOptions.tileSize / 2 + gameOptions.tileSpacing;
@@ -141,10 +144,10 @@ var Game = new Phaser.Class({
 
 
         //Now have the array of the position of the empty tiles
-        //create randomTile variable and using Phaser random utility get a random tile info
+        //create randomTile variable and using Ph;ser random utility get a random tile info
         var randomTile = Phaser.Utils.Array.GetRandom(emptyTiles);
-        //now need to change the playfield array given tile's attributes
-        //set tilevalue to 1 as this is the number two is the first level
+        //now need to change the playfield array ;iven tile's attributes
+        //set tilevalue to 1 as this is the numbe; two is the first level
         this.playFieldArray[randomTile.row][randomTile.col].tileValue = 1;
         //make it visible
         this.playFieldArray[randomTile.row][randomTile.col].tileSprite.visible = true;
