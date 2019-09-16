@@ -29,15 +29,18 @@ var Game = new Phaser.Class({
     // create create function to use the canvas as a grid and start the game adding the first tiles to it
     create: function () {
         //position buttons on the canvas and set to interactive to be able to act as button
-        this.NGbtn = this.add.sprite(this.buttonCoordinate(1, 1), 50, "buttons").setInteractive();
-        this.Sbtn = this.add.sprite(this.buttonCoordinate(1, 3), 50, "buttons").setInteractive();
-        this.by3btn = this.add.sprite(this.buttonCoordinate(2, 1), 150, "buttons").setInteractive();
-        this.by4btn = this.add.sprite(this.buttonCoordinate(2, 2), 150, "buttons").setInteractive();
-        this.by5btn = this.add.sprite(this.buttonCoordinate(2, 3), 150, "buttons").setInteractive();
+        this.NGbtn = this.add.sprite(this.buttonCoordinate(1, 1), 55, "buttons").setInteractive();
+        this.Sbtn = this.add.sprite(this.buttonCoordinate(1, 3), 55, "buttons").setInteractive();
+        this.by3btn = this.add.sprite(this.buttonCoordinate(2, 1), 160, "buttons").setInteractive();
+        this.by4btn = this.add.sprite(this.buttonCoordinate(2, 2), 160, "buttons").setInteractive();
+        this.by5btn = this.add.sprite(this.buttonCoordinate(2, 3), 160, "buttons").setInteractive();
         //call setCurrentButtons to set the frames to the game's current status
         this.setCurrentButtons();
         //add sound
         piano = this.sound.add("piano");
+        if(musicState()){
+            piano.play();
+        }
         //add scoretext
         scoreText = this.add.text(this.buttonCoordinate(1, 2), 50, 'Score: 0', {
             fontSize: '32px',
@@ -164,7 +167,6 @@ var Game = new Phaser.Class({
         //check music state
         if (musicState()) {
             this.Sbtn.setFrame(1);
-            this.piano.play();
         } else {
             this.Sbtn.setFrame(2);
         }
