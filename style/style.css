@@ -11,17 +11,35 @@ canvas {
 body {
   background-color: #CC3425;
   margin: 0;
-  }
+  overflow-y: auto;
+}
 
 header {
+  margin: 0;
+  position: fixed;
+  top: 0;
   background-color: #CC3425;
+  text-align: center;
+  line-height: normal;
+  font-size: 3.5vw;
+}
+
+header p#htitle {
+  font-weight: bold;
 }
 
 footer {
+  margin: 0;
   background-color: #CC3425;
   position: fixed;
   left: 0;
   bottom: 0;
-  width: 100%;
+  text-align: center;
+  line-height: normal;
+  font-size: 3.5vw;
+}
+
+p {
+  margin: 0;
 }
 /*# sourceMappingURL=style.css.map */

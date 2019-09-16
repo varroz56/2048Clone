@@ -4,7 +4,6 @@ var game;
 var score=0;
 var scoreText;
 //to be able to change later on easely
-
 var gameOptions = {
     //set tile size and spacing
     tileSize: 200,
@@ -25,15 +24,12 @@ window.onload = function () {
         //set the square canvas size, given the size of the tiles and spacing around them
         //give 200px to the height for menu buttons
         width: gameOptions.tileSize * gameOptions.playFieldSize + gameOptions.tileSpacing * (gameOptions.playFieldSize + 1),
-        height: gameOptions.tileSize * gameOptions.playFieldSize + gameOptions.tileSpacing * (gameOptions.playFieldSize + 1)+200,
+        height: gameOptions.tileSize * gameOptions.playFieldSize + gameOptions.tileSpacing * (gameOptions.playFieldSize + 1)+210,
         //set backgroung color
         backgroundColor: 0x6c7177,
         //point to the Game scene located in the Game.js
         scene: [Game]
     };
-    
-    console.log(sessionStorage.getItem("playFieldSize"));
-    console.log(gameOptions.playFieldSize);
     game = new Phaser.Game(gameConfig);
     //make sure the game object is frontmost
     window.focus();
@@ -46,6 +42,8 @@ window.onload = function () {
 function resize() {
     //select canvas element of the window
     var canvas = document.querySelector("canvas");
+    var header = document.getElementById("header");
+    var footer = document.getElementById("footer");
     //create window width and height using the browser's actual window size 
     var windowWidth = window.innerWidth;
     var windowHeight = window.innerHeight;
@@ -57,11 +55,17 @@ function resize() {
     if (windowRatio < gameRatio) {
         canvas.style.width = windowWidth + "px";
         canvas.style.height = (windowWidth / gameRatio) + "px";
+        header.style.width = windowWidth + "px";
+        header.style.height = (windowHeight-(windowWidth / gameRatio))/2 + "px";
+        footer.style.width = windowWidth + "px";
+        footer.style.height =  (windowHeight-(windowWidth / gameRatio))/2 + "px";
+        addContentHF();
     }
     //if the browser's window size more than the game size, set the canvas to the game size using the game ratio
     else {
         canvas.style.width = (windowHeight * gameRatio) + "px";
         canvas.style.height = windowHeight + "px";
+        rmContentHF();
     }
 }
 //check if there is a saved value in the session storage for the size of the play field
@@ -86,4 +90,19 @@ function musicState(){
         return 0;
     }
 
+}
+//to add content to the top on mobile but to the side on desktop
+function addContentHF(){
+    document.getElementById("htitle").innerHTML="2048 Game";
+    document.getElementById("h1p").innerHTML="Pull the tiles from side to side to add same values to the next power of 2!";
+    document.getElementById("h2p").innerHTML="Reach 2048, and You Win!";
+    document.getElementById("f1p").innerHTML="In the Menu you can choose to play on different sizes of grids listen to music!";
+    document.getElementById("f2p").innerHTML="Just click on the options and have fun!";
+}
+function rmContentHF(){
+    document.getElementById("htitle").innerHTML="";
+    document.getElementById("h1p").innerHTML="";
+    document.getElementById("h2p").innerHTML="";
+    document.getElementById("f1p").innerHTML="";
+    document.getElementById("f2p").innerHTML="";
 }
