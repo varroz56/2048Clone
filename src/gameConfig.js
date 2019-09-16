@@ -64,6 +64,8 @@ function resize() {
         canvas.style.height = windowHeight + "px";
     }
 }
+//check if there is a saved value in the session storage for the size of the play field
+// if not return 4 as the default
 function playSize(){
     var size = parseInt(sessionStorage.getItem("playFieldSize"));
     if(size>0){
@@ -72,4 +74,16 @@ function playSize(){
     else{
         return 4;
     }
+}
+//create musicState function to check if there is a stored value 1 or 2 in session storage
+//for default returns 0 as the music is off
+function musicState(){
+    var state = parseInt(sessionStorage.getItem("musicState"));
+    if(state>0){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+
 }
