@@ -70,7 +70,6 @@ var Game = new Phaser.Class({
 
             }
         }
-        var pointer = game.input.activePointer;
         //on btn click call restart function to setet the game
         this.NGbtn.on("pointerdown", function (pointer) {
 
@@ -116,7 +115,7 @@ var Game = new Phaser.Class({
                 var music = 1;
                 var m = music.toString();
                 sessionStorage.setItem("musicState", m);
-                piano.play("loop");
+                piano.play();
                 this.Sbtn.setFrame(1);
 
             }
@@ -145,10 +144,8 @@ var Game = new Phaser.Class({
         //check music state
         if (musicState()) {
             this.Sbtn.setFrame(1);
-            piano.play("loop");
         } else {
             this.Sbtn.setFrame(2);
-            piano.stop();
         }
 
     },
