@@ -256,7 +256,6 @@ var Game = new Phaser.Class({
         this.playFieldArray[randomTile.row][randomTile.col].tileSprite.setFrame(0);
         //add fullFilled function tocheck possible moves if emptyTiles has only one element(so the playfield is full)
         if (emptyTiles.length == 1) {
-            console.log("Playfield full, check for possible movement ...");
             this.fullFilled();
         }
     },
@@ -521,7 +520,6 @@ var Game = new Phaser.Class({
         }
         //end of the turn, add a new tile and set every tile to ugrade to true
         if (wasMove) {
-            console.log(" moved");
             this.addTile();
             for (var i = 0; i < gameOptions.playFieldSize; i++) {
                 for (var j = 0; j < gameOptions.playFieldSize; j++) {
@@ -590,6 +588,22 @@ var Game = new Phaser.Class({
         score += 10;
         scoreText.setText('Score: ' + score);
 
+        if(this.playFieldArray[i][k].tileValue == 10 || this.playFieldArray[i][j].tileValue == 10){
+            bestScore.visible= false;
+            scoreText,visible= false;
+            overText = this.add.text(this.buttonCoordinate(1, 2)-25, 55, 'You Won! ', {
+                fontSize: '35px',
+                fill: '#CC3425',
+            });
+            scoreText = this.add.text(this.buttonCoordinate(1, 2), 15, 'Score: ' + score, {
+                fontSize: '32px',
+                fill: '#facc78'
+            });
+            
+
+        }
+
+
     },
     //create fullFilled function to check if theres a possible move when the playfield is full
     fullFilled: function () {
@@ -607,6 +621,16 @@ var Game = new Phaser.Class({
                 //exceptions the bottom line and the right side colas there is either right or down side missing
                 //bottom line
                 if ((i == (gameOptions.playFieldSize - 1)) && (j == gameOptions.playFieldSize - 1)) {
+                    scoreText.visible= false;
+                    overText = this.add.text(this.buttonCoordinate(1, 2)-25, 55, 'Game Over! ', {
+                        fontSize: '35px',
+                        fill: '#CC3425',
+                    });
+                    bestScore = this.add.text(this.buttonCoordinate(1, 2), 15, 'Best: ' + this.getBest(), {
+                        fontSize: '32px',
+                        fill: '#facc78'
+                    });
+            
                     return true;
                 } else if (this.playFieldArray[i][j].tileValue == 0) {
                     return false;
