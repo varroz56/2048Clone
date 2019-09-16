@@ -25,21 +25,20 @@ var Game = new Phaser.Class({
     },
     // create create function to use the canvas as a grid and start the game adding the first tiles to it
     create: function () {
-        //position image on the canvas and set to interactive to be able to act as button
-        this.NGbtn = this.add.sprite(this.buttonCoordinate(1,1),50,"buttons").setInteractive();
-        this.Sbtn = this.add.sprite(this.buttonCoordinate(1,3),50,"buttons").setInteractive();
-        this.by3btn = this.add.sprite(this.buttonCoordinate(2,1),150,"buttons").setInteractive();
-        this.by4btn = this.add.sprite(this.buttonCoordinate(2,2),150,"buttons").setInteractive();
-        this.by5btn = this.add.sprite(this.buttonCoordinate(2,3),150,"buttons").setInteractive();
-        
-        this.NGbtn.setFrame(0);
-        this.Sbtn.setFrame(2);
-        this.by3btn.setFrame(3);
-        this.by4btn.setFrame(6);
-        this.by5btn.setFrame(7);
-//add scoretext
-        scoreText = this.add.text(this.buttonCoordinate(1,2), 40, ' Your Score: 0',{fontSize: '32px', fill: '#facc78'});
-          
+        //position buttons on the canvas and set to interactive to be able to act as button
+        this.NGbtn = this.add.sprite(this.buttonCoordinate(1, 1), 50, "buttons").setInteractive();
+        this.Sbtn = this.add.sprite(this.buttonCoordinate(1, 3), 50, "buttons").setInteractive();
+        this.by3btn = this.add.sprite(this.buttonCoordinate(2, 1), 150, "buttons").setInteractive();
+        this.by4btn = this.add.sprite(this.buttonCoordinate(2, 2), 150, "buttons").setInteractive();
+        this.by5btn = this.add.sprite(this.buttonCoordinate(2, 3), 150, "buttons").setInteractive();
+        //call setCurrentButtons to set the frames to the game's current status
+        this.setCurrentButtons();
+        //add scoretext
+        scoreText = this.add.text(this.buttonCoordinate(1, 2), 40, ' Your Score: 0', {
+            fontSize: '32px',
+            fill: '#facc78'
+        });
+
         //Create array to store the tile position and tile values
         this.playFieldArray = [];
         this.playFieldGroup = this.add.group();
@@ -49,7 +48,7 @@ var Game = new Phaser.Class({
             for (var j = 0; j < gameOptions.playFieldSize; j++) {
                 //allocate a sprite object using tileCoordinate function to determine the tile's location on the canvas
                 //also give 200px space on the top for menu
-                var emptyTile = this.add.sprite(this.tileCoordinate(j), this.tileCoordinate(i)+200, "tiles");
+                var emptyTile = this.add.sprite(this.tileCoordinate(j), this.tileCoordinate(i) + 200, "tiles");
                 //set the tile to invisible
                 emptyTile.alpha = 0;
                 emptyTile.visible = 0;
@@ -73,27 +72,27 @@ var Game = new Phaser.Class({
         //add the first two tiles to the playfield
         this.addTile();
         this.addTile();
-        
+
         //on btn click call restart function to setet the game
-        this.NGbtn.on("pointerdown", function(){
+        this.NGbtn.on("pointerdown", function () {
             score = 0;
             this.scene.restart();
         }, this);
-        this.by3btn.on("pointerdown", function(){
+        this.by3btn.on("pointerdown", function () {
             score = 0;
             var size = 3;
             var n = size.toString();
             sessionStorage.setItem("playFieldSize", n);
             location.reload();
         }, this);
-        this.by4btn.on("pointerdown", function(){
+        this.by4btn.on("pointerdown", function () {
             score = 0;
             var size = 4;
             var n = size.toString();
             sessionStorage.setItem("playFieldSize", n);
             location.reload();
         }, this);
-        this.by5btn.on("pointerdown", function(){
+        this.by5btn.on("pointerdown", function () {
             score = 0;
             var size = 5;
             var n = size.toString();
@@ -104,19 +103,70 @@ var Game = new Phaser.Class({
 
 
     },
+    //to set the buttons state need to check the playfieldsize and musicstate in session storage
+    //the new game button is the same everytime
+    //to handle each button type separate, create setSoundBtn and setSizeBtn functions 
+    setCurrentButtons: function () {
+        //new game button always the same
+        this.NGbtn.setFrame(0);
+        //call setSoundBtn function to set music on or off button
+        this.setSoundBtn();
+        //call setSizeBtn function to set current play filed size button
+        this.setSizeBtn();
+    },
+    setSoundBtn: function () {
+        //check music state
+        if (musicState()) {
+            this.Sbtn.setFrame(1);
+        } else {
+            this.Sbtn.setFrame(2);
+        }
+
+    },
+    setSizeBtn: function () {
+        //check current play field size
+        var size = playSize();
+        if (size == 3) {
+            this.by3btn.setFrame(4);
+            this.by4btn.setFrame(5);
+            this.by5btn.setFrame(7);
+
+        } else if (size == 4) {
+            this.by3btn.setFrame(3);
+            this.by4btn.setFrame(6);
+            this.by5btn.setFrame(7);
+
+        }
+        if (size == 5) {
+            this.by3btn.setFrame(3);
+            this.by4btn.setFrame(5);
+            this.by5btn.setFrame(8);
+
+        }
+
+    },
     //create button coordinate function return an x coordinate based on row and position
     //2 rows for menu and 1-3 positions
-    buttonCoordinate: function(row, pos){
+    buttonCoordinate: function (row, pos) {
+        //get canvas width
         var w = document.querySelector("canvas").width;
-        if(row == 1){
-            if(pos == 1){return w/8+20;}
-            else if(pos==2){return w/3-20;}
-            else if(pos == 3){return w/8*7-20;}
-        }
-        else if(row==2){
-            if(pos == 1){return w/8+20;}
-            else if(pos==2){return w/2;}
-            else if(pos == 3){return w/8*7-20;}
+        //for the top row elements
+        if (row == 1) {
+            if (pos == 1) {
+                return w / 8 + 20;
+            } else if (pos == 2) {
+                return w / 3 - 20;
+            } else if (pos == 3) {
+                return w / 8 * 7 - 20;
+            }
+        } else if (row == 2) {
+            if (pos == 1) {
+                return w / 8 + 20;
+            } else if (pos == 2) {
+                return w / 2;
+            } else if (pos == 3) {
+                return w / 8 * 7 - 20;
+            }
 
         }
     },
@@ -155,7 +205,7 @@ var Game = new Phaser.Class({
         //choose the first frame of the spritesheet(starting at 0)
         this.playFieldArray[randomTile.row][randomTile.col].tileSprite.setFrame(0);
         //add fullFilled function tocheck possible moves if emptyTiles has only one element(so the playfield is full)
-        if(emptyTiles.length==1){
+        if (emptyTiles.length == 1) {
             console.log("Playfield full, check for possible movement ...");
             this.fullFilled();
         }
@@ -423,13 +473,13 @@ var Game = new Phaser.Class({
         if (wasMove) {
             console.log(" moved");
             this.addTile();
-               for (var i = 0; i < gameOptions.playFieldSize; i++) {
+            for (var i = 0; i < gameOptions.playFieldSize; i++) {
                 for (var j = 0; j < gameOptions.playFieldSize; j++) {
                     this.playFieldArray[i][j].upgradeable = true;
                 }
             }
         }
-        
+
 
     },
     //create moveTile to move individual tiles taking a direction string and the end position
@@ -527,39 +577,38 @@ var Game = new Phaser.Class({
         //to avoid double check, check only the right side and the one below
 
         for (var i = 0; i < gameOptions.playFieldSize; i++) {
-            for (var j=0; j < gameOptions.playFieldSize; j++) {
-                var k= j+1;
-                var l= i+1;
+            for (var j = 0; j < gameOptions.playFieldSize; j++) {
+                var k = j + 1;
+                var l = i + 1;
                 // if bottom right corner reached, there is no possible move, return true
                 //exceptions the bottom line and the right side colas there is either right or down side missing
                 //bottom line
-                if ((i == (gameOptions.playFieldSize-1)) && (j == gameOptions.playFieldSize-1)) {
+                if ((i == (gameOptions.playFieldSize - 1)) && (j == gameOptions.playFieldSize - 1)) {
                     console.log("No Possible Moves");
                     console.log("GAME OVER");
                     return true;
-                }        
-                else if(this.playFieldArray[i][j].tileValue==0){
-                    console.log("there is an empty tile "+i+" , "+j);
+                } else if (this.playFieldArray[i][j].tileValue == 0) {
+                    console.log("there is an empty tile " + i + " , " + j);
                     console.log(this.playFieldArray);
                     console.log(this.playFieldArray[i][j].tileValue);
-                    
+
 
                     return false;
                 }
                 //bottom row
-                else if (i == gameOptions.playFieldSize-1) {
-                    if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i][j+1].tileValue) {
+                else if (i == gameOptions.playFieldSize - 1) {
+                    if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i][j + 1].tileValue) {
                         console.log("bottom line possible move");
                         return false;
                     }
                 }
                 //right col
-                else if(j == gameOptions.playFieldSize - 1) {
-                    if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i+1][j].tileValue) {
+                else if (j == gameOptions.playFieldSize - 1) {
+                    if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i + 1][j].tileValue) {
                         console.log("right col possible move");
                         return false;
                     }
-                    
+
                 }
                 //for the other tiles need to check both
                 else if ((this.playFieldArray[i][j].tileValue == this.playFieldArray[i][k].tileValue) || (this.playFieldArray[i][j].tileValue == this.playFieldArray[l][j].tileValue)) {
@@ -567,8 +616,8 @@ var Game = new Phaser.Class({
                     return false;
                 }
             }
-   
+
         }
-        
+
     }
 });
