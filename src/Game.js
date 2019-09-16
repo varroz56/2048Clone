@@ -37,7 +37,7 @@ var Game = new Phaser.Class({
         //call setCurrentButtons to set the frames to the game's current status
         this.setCurrentButtons();
         //add sound
-        var piano = this.sound.add("piano");
+        piano = this.sound.add("piano");
         //add scoretext
         scoreText = this.add.text(this.buttonCoordinate(1, 2), 40, ' Your Score: 0', {
             fontSize: '32px',
@@ -72,37 +72,29 @@ var Game = new Phaser.Class({
         }
         //on btn click call restart function to setet the game
         this.NGbtn.on("pointerdown", function (pointer) {
-
             score = 0;
             this.scene.restart();
-            console.log("ngbutton clicked");
         }, this);
         this.by3btn.on("pointerdown", function (pointer) {
-
             score = 0;
             var size = 3;
             var n = size.toString();
             sessionStorage.setItem("playFieldSize", n);
             location.reload();
-            console.log("3button clicked");
         }, this);
         this.by4btn.on("pointerdown", function (pointer) {
-
             score = 0;
             var size = 4;
             var n = size.toString();
             sessionStorage.setItem("playFieldSize", n);
             location.reload();
-            console.log("4button clicked");
         }, this);
         this.by5btn.on("pointerdown", function (pointer) {
-
             score = 0;
             var size = 5;
             var n = size.toString();
             sessionStorage.setItem("playFieldSize", n);
             location.reload();
-            console.log("5button clicked");
         }, this);
         this.Sbtn.on("pointerdown", function (pointer) {
             if (musicState()) {
@@ -117,7 +109,6 @@ var Game = new Phaser.Class({
                 sessionStorage.setItem("musicState", m);
                 piano.play();
                 this.Sbtn.setFrame(1);
-
             }
         }, this);
         //call keyInput function to handle all permitted keystrokes
@@ -144,6 +135,7 @@ var Game = new Phaser.Class({
         //check music state
         if (musicState()) {
             this.Sbtn.setFrame(1);
+            this.piano.play();
         } else {
             this.Sbtn.setFrame(2);
         }
