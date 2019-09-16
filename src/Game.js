@@ -73,13 +73,13 @@ var Game = new Phaser.Class({
         var pointer = game.input.activePointer;
         //on btn click call restart function to setet the game
         this.NGbtn.on("pointerdown", function (pointer) {
-            
+
             score = 0;
             this.scene.restart();
             console.log("ngbutton clicked");
         }, this);
         this.by3btn.on("pointerdown", function (pointer) {
-            
+
             score = 0;
             var size = 3;
             var n = size.toString();
@@ -88,7 +88,7 @@ var Game = new Phaser.Class({
             console.log("3button clicked");
         }, this);
         this.by4btn.on("pointerdown", function (pointer) {
-            
+
             score = 0;
             var size = 4;
             var n = size.toString();
@@ -97,7 +97,7 @@ var Game = new Phaser.Class({
             console.log("4button clicked");
         }, this);
         this.by5btn.on("pointerdown", function (pointer) {
-            
+
             score = 0;
             var size = 5;
             var n = size.toString();
@@ -105,18 +105,21 @@ var Game = new Phaser.Class({
             location.reload();
             console.log("5button clicked");
         }, this);
-        this.Sbtn.on("pointerdown", function(pointer){
-           if(musicState()){
-               sessionStorage.setItem("musicState", "0");
-               piano.stop();
-               this.Sbtn.setFrame(2);
-           }
-           else{
-                sessionStorage.setItem("musicState", "1");
-                piano.play();
+        this.Sbtn.on("pointerdown", function (pointer) {
+            if (musicState()) {
+                var music = 0;
+                var m = music.toString();
+                sessionStorage.setItem("musicState", m);
+                piano.stop();
+                this.Sbtn.setFrame(2);
+            } else {
+                var music = 1;
+                var m = music.toString();
+                sessionStorage.setItem("musicState", m);
+                piano.play("loop");
                 this.Sbtn.setFrame(1);
 
-           }
+            }
         }, this);
         //call keyInput function to handle all permitted keystrokes
         this.input.keyboard.on("keydown", this.keyInput, this);
@@ -142,8 +145,10 @@ var Game = new Phaser.Class({
         //check music state
         if (musicState()) {
             this.Sbtn.setFrame(1);
+            piano.play("loop");
         } else {
             this.Sbtn.setFrame(2);
+            piano.stop();
         }
 
     },
