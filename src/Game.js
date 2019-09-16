@@ -39,7 +39,7 @@ var Game = new Phaser.Class({
         //add sound and if the sound was on before, play the music 
         piano = this.sound.add("piano");
         if (musicState()) {
-            
+
             piano.play({
                 //lower the default volume and loop the track
                 volume: .5,
@@ -66,8 +66,8 @@ var Game = new Phaser.Class({
             this.playFieldArray[i] = [];
             for (var j = 0; j < gameOptions.playFieldSize; j++) {
                 //allocate a sprite object using tileCoordinate function to determine the tile's location on the canvas
-                //also give 200px space on the top for menu
-                var emptyTile = this.add.sprite(this.tileCoordinate(j), this.tileCoordinate(i) + 200, "tiles");
+                //also give 210px space on the top for menu
+                var emptyTile = this.add.sprite(this.tileCoordinate(j), this.tileCoordinate(i) + 210, "tiles");
                 //set the tile to invisible
                 emptyTile.alpha = 0;
                 emptyTile.visible = 0;
@@ -202,24 +202,76 @@ var Game = new Phaser.Class({
     buttonCoordinate: function (row, pos) {
         //get canvas width
         var w = document.querySelector("canvas").width;
-        //for the top row elements
+        //for better experience, handle the 3 differnt play field size 
+        //if the siz is 3 by 3
+        if (playSize() == 3) {
+            if (row == 1) {
+                if (pos == 1) {
+                    return w / 8 + 20;
+                } else if (pos == 2) {
+                    return w / 3 + 30;
+                } else if (pos == 3) {
+                    return w / 8 * 7 - 20;
+                }
+                //for the bottom row elemnts
+            } else if (row == 2) {
+                if (pos == 1) {
+                    return w / 8 + 20;
+                } else if (pos == 2) {
+                    return w / 2;
+                } else if (pos == 3) {
+                    return w / 8 * 7 - 20;
+                }
+
+            }
+
+        }
+        // if its a 5by5
+        else if(playSize()==5){
+                    //for the top row elements
         if (row == 1) {
             if (pos == 1) {
-                return w / 8 + 20;
+                return w / 10 ;
             } else if (pos == 2) {
-                return w / 3 + 30;
+                return w / 2 -95;
             } else if (pos == 3) {
-                return w / 8 * 7 - 20;
+                return w / 10*9;
             }
+            //for the bottom row elemnts
         } else if (row == 2) {
             if (pos == 1) {
-                return w / 8 + 20;
+                return w /3 -30;
             } else if (pos == 2) {
                 return w / 2;
             } else if (pos == 3) {
-                return w / 8 * 7 - 20;
+                return w / 3*2 + 30;
             }
 
+        }
+
+        }
+        //if its 4by4 or the first game default 4by4
+        else{
+            if (row == 1) {
+                if (pos == 1) {
+                    return w / 8;
+                } else if (pos == 2) {
+                    return w / 2 -95;
+                } else if (pos == 3) {
+                    return w / 8*7;
+                }
+                //for the bottom row elemnts
+            } else if (row == 2) {
+                if (pos == 1) {
+                    return w /4 ;
+                } else if (pos == 2) {
+                    return w / 2;
+                } else if (pos == 3) {
+                    return w / 4*3;
+                }
+    
+            }
+    
         }
     },
     //create tileCoordinate function to get a tile horizontal or vertical positon on the canvas calculating from tile size, spacing and using the its relative position on the grid
@@ -590,10 +642,10 @@ var Game = new Phaser.Class({
         score += 10;
         scoreText.setText('Score: ' + score);
 
-        if(this.playFieldArray[i][k].tileValue == 10 || this.playFieldArray[i][j].tileValue == 10){
-            bestScore.visible= false;
-            scoreText,visible= false;
-            overText = this.add.text(this.buttonCoordinate(1, 2)-25, 55, 'You Won! ', {
+        if (this.playFieldArray[i][k].tileValue == 10 || this.playFieldArray[i][j].tileValue == 10) {
+            bestScore.visible = false;
+            scoreText, visible = false;
+            overText = this.add.text(this.buttonCoordinate(1, 2) - 25, 55, 'You Won! ', {
                 fontSize: '35px',
                 fill: '#CC3425',
             });
@@ -601,7 +653,7 @@ var Game = new Phaser.Class({
                 fontSize: '32px',
                 fill: '#facc78'
             });
-            
+
 
         }
 
@@ -623,8 +675,8 @@ var Game = new Phaser.Class({
                 //exceptions the bottom line and the right side colas there is either right or down side missing
                 //bottom line
                 if ((i == (gameOptions.playFieldSize - 1)) && (j == gameOptions.playFieldSize - 1)) {
-                    scoreText.visible= false;
-                    overText = this.add.text(this.buttonCoordinate(1, 2)-25, 55, 'Game Over! ', {
+                    scoreText.visible = false;
+                    overText = this.add.text(this.buttonCoordinate(1, 2) - 25, 55, 'Game Over! ', {
                         fontSize: '35px',
                         fill: '#CC3425',
                     });
@@ -632,7 +684,7 @@ var Game = new Phaser.Class({
                         fontSize: '32px',
                         fill: '#facc78'
                     });
-            
+
                     return true;
                 } else if (this.playFieldArray[i][j].tileValue == 0) {
                     return false;
