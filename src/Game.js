@@ -39,10 +39,16 @@ var Game = new Phaser.Class({
         //add sound
         piano = this.sound.add("piano");
         //add scoretext
-        scoreText = this.add.text(this.buttonCoordinate(1, 2), 40, ' Your Score: 0', {
+        scoreText = this.add.text(this.buttonCoordinate(1, 2), 50, 'Score: 0', {
             fontSize: '32px',
             fill: '#facc78'
         });
+        //add best scoretext
+        bestScore = this.add.text(this.buttonCoordinate(1, 2), 15, 'Best: '+ this.getBest(), {
+            fontSize: '32px',
+            fill: '#facc78'
+        });
+
 
         //Create array to store the tile position and tile values
         this.playFieldArray = [];
@@ -72,10 +78,12 @@ var Game = new Phaser.Class({
         }
         //on btn click call restart function to setet the game
         this.NGbtn.on("pointerdown", function (pointer) {
+            this.saveBest();
             score = 0;
             this.scene.restart();
         }, this);
         this.by3btn.on("pointerdown", function (pointer) {
+            this.saveBest();
             score = 0;
             var size = 3;
             var n = size.toString();
@@ -83,6 +91,7 @@ var Game = new Phaser.Class({
             location.reload();
         }, this);
         this.by4btn.on("pointerdown", function (pointer) {
+            this.saveBest();
             score = 0;
             var size = 4;
             var n = size.toString();
@@ -90,6 +99,7 @@ var Game = new Phaser.Class({
             location.reload();
         }, this);
         this.by5btn.on("pointerdown", function (pointer) {
+            this.saveBest();
             score = 0;
             var size = 5;
             var n = size.toString();
@@ -119,6 +129,25 @@ var Game = new Phaser.Class({
         this.addTile();
         this.addTile();
 
+    },
+    
+    //create saveBest function to save best score to session storage
+    saveBest: function(){
+        if(score>sessionStorage.getItem("best")){
+            var n = score.toString();
+            sessionStorage.setItem("best", n);
+    
+        }
+    },
+    //create getBest function to read bst score from session storage
+    getBest: function(){
+        if(sessionStorage.getItem("best")>0){
+            var n = sessionStorage.getItem("best");
+            return parseInt(n);
+        }
+        else{
+            return 0;
+        }
     },
     //to set the buttons state need to check the playfieldsize and musicstate in session storage
     //the new game button is the same everytime
@@ -173,7 +202,7 @@ var Game = new Phaser.Class({
             if (pos == 1) {
                 return w / 8 + 20;
             } else if (pos == 2) {
-                return w / 3 - 20;
+                return w / 3 + 30;
             } else if (pos == 3) {
                 return w / 8 * 7 - 20;
             }
@@ -583,7 +612,7 @@ var Game = new Phaser.Class({
         this.playFieldArray[i][j].tileSprite.alpha = 0;
 
         score += 10;
-        scoreText.setText('Your Score: ' + score);
+        scoreText.setText('Score: ' + score);
 
     },
     //create fullFilled function to check if theres a possible move when the playfield is full
