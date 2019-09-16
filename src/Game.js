@@ -22,6 +22,9 @@ var Game = new Phaser.Class({
             frameWidth: gameOptions.btnWidth,
             frameHeight: gameOptions.btnHeight
         });
+        //load music file to memory
+        //Downloaded from: https://www.dl-sounds.com/royalty-free/ambient-piano/
+        this.load.audio("piano", "assets/sound/AmbientPiano.wav");
     },
     // create create function to use the canvas as a grid and start the game adding the first tiles to it
     create: function () {
@@ -33,6 +36,8 @@ var Game = new Phaser.Class({
         this.by5btn = this.add.sprite(this.buttonCoordinate(2, 3), 150, "buttons").setInteractive();
         //call setCurrentButtons to set the frames to the game's current status
         this.setCurrentButtons();
+        //add sound
+        var piano = this.sound.add("piano");
         //add scoretext
         scoreText = this.add.text(this.buttonCoordinate(1, 2), 40, ' Your Score: 0', {
             fontSize: '32px',
@@ -65,6 +70,54 @@ var Game = new Phaser.Class({
 
             }
         }
+        var pointer = game.input.activePointer;
+        //on btn click call restart function to setet the game
+        this.NGbtn.on("pointerdown", function (pointer) {
+            
+            score = 0;
+            this.scene.restart();
+            console.log("ngbutton clicked");
+        }, this);
+        this.by3btn.on("pointerdown", function (pointer) {
+            
+            score = 0;
+            var size = 3;
+            var n = size.toString();
+            sessionStorage.setItem("playFieldSize", n);
+            location.reload();
+            console.log("3button clicked");
+        }, this);
+        this.by4btn.on("pointerdown", function (pointer) {
+            
+            score = 0;
+            var size = 4;
+            var n = size.toString();
+            sessionStorage.setItem("playFieldSize", n);
+            location.reload();
+            console.log("4button clicked");
+        }, this);
+        this.by5btn.on("pointerdown", function (pointer) {
+            
+            score = 0;
+            var size = 5;
+            var n = size.toString();
+            sessionStorage.setItem("playFieldSize", n);
+            location.reload();
+            console.log("5button clicked");
+        }, this);
+        this.Sbtn.on("pointerdown", function(pointer){
+           if(musicState()){
+               sessionStorage.setItem("musicState", "0");
+               piano.stop();
+               this.Sbtn.setFrame(2);
+           }
+           else{
+                sessionStorage.setItem("musicState", "1");
+                piano.play();
+                this.Sbtn.setFrame(1);
+
+           }
+        }, this);
         //call keyInput function to handle all permitted keystrokes
         this.input.keyboard.on("keydown", this.keyInput, this);
         //add input listener for pointer
@@ -72,35 +125,6 @@ var Game = new Phaser.Class({
         //add the first two tiles to the playfield
         this.addTile();
         this.addTile();
-
-        //on btn click call restart function to setet the game
-        this.NGbtn.on("pointerdown", function () {
-            score = 0;
-            this.scene.restart();
-        }, this);
-        this.by3btn.on("pointerdown", function () {
-            score = 0;
-            var size = 3;
-            var n = size.toString();
-            sessionStorage.setItem("playFieldSize", n);
-            location.reload();
-        }, this);
-        this.by4btn.on("pointerdown", function () {
-            score = 0;
-            var size = 4;
-            var n = size.toString();
-            sessionStorage.setItem("playFieldSize", n);
-            location.reload();
-        }, this);
-        this.by5btn.on("pointerdown", function () {
-            score = 0;
-            var size = 5;
-            var n = size.toString();
-            sessionStorage.setItem("playFieldSize", n);
-            location.reload();
-        }, this);
-
-
 
     },
     //to set the buttons state need to check the playfieldsize and musicstate in session storage
