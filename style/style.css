@@ -9,6 +9,18 @@ canvas {
 }
 
 body {
-  background-color: black;
+  background-color: #6c7177;
+}
+
+header {
+  background-color: #6c7177 !important;
+}
+
+footer {
+  background-color: #6c7177;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
 /*# sourceMappingURL=style.css.map */
