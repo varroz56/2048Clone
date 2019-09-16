@@ -109,14 +109,14 @@ var Game = new Phaser.Class({
     buttonCoordinate: function(row, pos){
         var w = document.querySelector("canvas").width;
         if(row == 1){
-            if(pos == 1){return w/8-5;}
-            else if(pos==2){return w/3-15;}
-            else if(pos == 3){return w/8*7;}
+            if(pos == 1){return w/8+20;}
+            else if(pos==2){return w/3-20;}
+            else if(pos == 3){return w/8*7-20;}
         }
         else if(row==2){
-            if(pos == 1){return w/8+10;}
+            if(pos == 1){return w/8+20;}
             else if(pos==2){return w/2;}
-            else if(pos == 3){return w/8*7;}
+            else if(pos == 3){return w/8*7-20;}
 
         }
     },
