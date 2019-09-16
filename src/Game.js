@@ -39,6 +39,7 @@ var Game = new Phaser.Class({
         //add sound and if the sound was on before, play the music 
         piano = this.sound.add("piano");
         if (musicState()) {
+            
             piano.play({
                 //lower the default volume and loop the track
                 volume: .5,
@@ -87,6 +88,7 @@ var Game = new Phaser.Class({
         this.NGbtn.on("pointerdown", function (pointer) {
             this.saveBest();
             score = 0;
+            piano.stop();
             this.scene.restart();
         }, this);
         this.by3btn.on("pointerdown", function (pointer) {
