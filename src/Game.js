@@ -36,10 +36,14 @@ var Game = new Phaser.Class({
         this.by5btn = this.add.sprite(this.buttonCoordinate(2, 3), 160, "buttons").setInteractive();
         //call setCurrentButtons to set the frames to the game's current status
         this.setCurrentButtons();
-        //add sound
+        //add sound and if the sound was on before, play the music 
         piano = this.sound.add("piano");
         if(musicState()){
-            piano.play();
+            piano.play({
+                //lower the default volume and loop the track
+                volume: .5,
+                loop: true
+            });
         }
         //add scoretext
         scoreText = this.add.text(this.buttonCoordinate(1, 2), 50, 'Score: 0', {
@@ -175,22 +179,20 @@ var Game = new Phaser.Class({
     setSizeBtn: function () {
         //check current play field size
         var size = playSize();
+        //set everything to not active color
+        this.by3btn.setFrame(3);
+        this.by4btn.setFrame(5);
+        this.by5btn.setFrame(7);
+        //set the current one to active color
         if (size == 3) {
             this.by3btn.setFrame(4);
-            this.by4btn.setFrame(5);
-            this.by5btn.setFrame(7);
 
         } else if (size == 4) {
-            this.by3btn.setFrame(3);
             this.by4btn.setFrame(6);
-            this.by5btn.setFrame(7);
 
         }
         if (size == 5) {
-            this.by3btn.setFrame(3);
-            this.by4btn.setFrame(5);
             this.by5btn.setFrame(8);
-
         }
 
     },
@@ -536,20 +538,6 @@ var Game = new Phaser.Class({
         //four directions
         switch (str) {
             case "left":
-                //copy the tile to the empty tile
-                this.playFieldArray[i][k].tileValue = this.playFieldArray[i][j].tileValue;
-                this.playFieldArray[i][k].tileSprite.visible = true;
-                this.playFieldArray[i][k].tileSprite.alpha = 1;
-                this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][j].tileValue - 1);
-                break;
-
-            case "down":
-                //copy the tile to the empty tile
-                this.playFieldArray[k][j].tileValue = this.playFieldArray[i][j].tileValue;
-                this.playFieldArray[k][j].tileSprite.visible = true;
-                this.playFieldArray[k][j].tileSprite.alpha = 1;
-                this.playFieldArray[k][j].tileSprite.setFrame(this.playFieldArray[i][j].tileValue - 1);
-                break;
             case "right":
                 //copy the tile to the empty tile
                 this.playFieldArray[i][k].tileValue = this.playFieldArray[i][j].tileValue;
@@ -557,7 +545,9 @@ var Game = new Phaser.Class({
                 this.playFieldArray[i][k].tileSprite.alpha = 1;
                 this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][j].tileValue - 1);
                 break;
+
             case "up":
+            case "down":
                 //copy the tile to the empty tile
                 this.playFieldArray[k][j].tileValue = this.playFieldArray[i][j].tileValue;
                 this.playFieldArray[k][j].tileSprite.visible = true;
