@@ -67,7 +67,7 @@ var Game = new Phaser.Class({
             for (var j = 0; j < gameOptions.playFieldSize; j++) {
                 //allocate a sprite object using tileCoordinate function to determine the tile's location on the canvas
                 //also give 210px space on the top for menu
-                var emptyTile = this.add.sprite(this.tileCoordinate(j), this.tileCoordinate(i) + 200, "tiles");
+                var emptyTile = this.add.sprite(this.tileCoordinate(j), this.tileCoordinate(i) + 210, "tiles");
                 //set the tile to invisible
                 emptyTile.alpha = 0;
                 emptyTile.visible = 0;
