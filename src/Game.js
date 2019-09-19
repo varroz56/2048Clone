@@ -1,3 +1,23 @@
+/***************gameConfig.js file structure
+ * Sections:
+ * Declaration of Game scene Phaser class
+ *      This class declaration includes all functions related to gameplay
+ * Preload section to load media to memory 
+ * Create section holds the functions for interaction in the game
+ *      Load and Position media on the scene
+ *      Check and set current Button and Score states regarding to canvas size and saved state
+ *      Create Playfield and give relative position to tiles
+ *      Handle button click to store session data and to recall them with new config sttings 
+ *      Handle user interaction to the playfield
+ *          Trigger move or upgrade method
+ *          Execute move / or upgrade     
+ *      Check if the user has possible movements on a full playfield 
+ * 
+ * 
+ */
+
+//------------------------Game Scene Class--------------------------
+
 // create the game scene using phaser scene class
 var Game = new Phaser.Class({
 
@@ -8,6 +28,7 @@ var Game = new Phaser.Class({
         });
 
     },
+ //-----------------------Preload Section
     // create preload function to load the tiles
     preload: function () {
         //load the tiles to the memory to be able to use it in the game and as a spritesheet to add options for animation
@@ -26,14 +47,18 @@ var Game = new Phaser.Class({
         //Downloaded from: https://www.dl-sounds.com/royalty-free/ambient-piano/
         this.load.audio("piano", "assets/sound/AmbientPiano.wav");
     },
+
+//----------------------Create section-----------------------------
     // create create function to use the canvas as a grid and start the game adding the first tiles to it
     create: function () {
+//----------------------Load and Position media on the scene------------------
         //position buttons on the canvas and set to interactive to be able to act as button
         this.NGbtn = this.add.sprite(this.buttonCoordinate(1, 1), 55, "buttons").setInteractive();
         this.Sbtn = this.add.sprite(this.buttonCoordinate(1, 3), 55, "buttons").setInteractive();
         this.by3btn = this.add.sprite(this.buttonCoordinate(2, 1), 160, "buttons").setInteractive();
         this.by4btn = this.add.sprite(this.buttonCoordinate(2, 2), 160, "buttons").setInteractive();
         this.by5btn = this.add.sprite(this.buttonCoordinate(2, 3), 160, "buttons").setInteractive();
+//---------------------Check and set current Button and Score states regarding to canvas size and saved state--------------
         //call setCurrentButtons to set the frames to the game's current status
         this.setCurrentButtons();
         //add sound and if the sound was on before, play the music 
@@ -57,6 +82,7 @@ var Game = new Phaser.Class({
             fill: '#facc78'
         });
 
+//-----------------Create Playfield and give relative position to tiles-----------------
 
         //Create array to store the tile position and tile values
         this.playFieldArray = [];
@@ -84,6 +110,8 @@ var Game = new Phaser.Class({
 
             }
         }
+
+//--------------------Handle button click to store session data and to recall them with new config sttings------
         //on btn click call restart function to setet the game
         this.NGbtn.on("pointerdown", function (pointer) {
             this.saveBest();
@@ -130,16 +158,21 @@ var Game = new Phaser.Class({
                 this.Sbtn.setFrame(1);
             }
         }, this);
+
+//------------------------Handle user interaction to the playfield------------------
+
         //call keyInput function to handle all permitted keystrokes
         this.input.keyboard.on("keydown", this.keyInput, this);
         //add input listener for pointer
         this.input.on("pointerup", this.mouseInput, this);
         //add the first two tiles to the playfield
+
+//-------------------Add  new tile with a value of 2 to the playfield to a random position
         this.addTile();
         this.addTile();
 
     },
-
+//-------------------Check and set current Button and Score states regarding to canvas size and saved state----------------------
     //create saveBest function to save best score to session storage
     saveBest: function () {
         if (score > sessionStorage.getItem("best")) {
@@ -274,10 +307,16 @@ var Game = new Phaser.Class({
     
         }
     },
+
+//----------------------------Create Playfield and give relative position to tiles----------------
+
     //create tileCoordinate function to get a tile horizontal or vertical positon on the canvas calculating from tile size, spacing and using the its relative position on the grid
     tileCoordinate: function (relativePosition) {
         return relativePosition * (gameOptions.tileSize + gameOptions.tileSpacing) + gameOptions.tileSize / 2 + gameOptions.tileSpacing;
     },
+
+//------------------------------Add  new tile with a value of 2 to the playfield to a random position---------------
+
     //create addTile function to add a not empty tile to the field
     addTile: function () {
         //Need to determine the empty tiles positions to randomly put a number 2 on one of them
@@ -313,6 +352,9 @@ var Game = new Phaser.Class({
             this.fullFilled();
         }
     },
+ 
+ //-----------------------------------Handle user interaction to the playfield---------------------------
+ 
     //create keyInput to simplify keyboard inputs and to call th moveTiles function later on
     keyInput: function (event) {
         //use switch to handle the four cases
@@ -402,6 +444,9 @@ var Game = new Phaser.Class({
         }
 
     },
+
+//--------------------------------Trigger move or upgrade method-----------------------
+
 
     //create moveTiles function to move tiles upon user input
     moveTiles: function (str) {
@@ -584,6 +629,9 @@ var Game = new Phaser.Class({
 
 
     },
+
+//---------------------------Execute move / or upgrade--------------------
+
     //create moveTile to move individual tiles taking a direction string and the end position
     moveTile: function (str, i, j, k) {
         //four directions
@@ -659,6 +707,10 @@ var Game = new Phaser.Class({
 
 
     },
+
+
+//-----------------------------Check if the user has possible movements on a full playfield---------
+
     //create fullFilled function to check if theres a possible move when the playfield is full
     fullFilled: function () {
         //this function returns true if Game Over because the playfield 
