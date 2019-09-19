@@ -95,15 +95,27 @@ function addContentHF(){
     //To decide how much content can go on the header and footer
     //need to check their size
     var header = document.getElementById("header");
-    var size = header.style.height;
-    if(size<35){
+    var size = parseInt(header.style.height);
+    console.log(size);
+    if(size==0){
+        rmContentHF();
+    }
+    if(size>20){
         document.getElementById("htitle").innerHTML="2048 Game";
-        document.getElementById("f2p").innerHTML="Just click on the options and have fun!";
-
-    }    
-    document.getElementById("h1p").innerHTML="Pull the tiles from side to side to add same values to the next power of 2!";
-    document.getElementById("h2p").innerHTML="Reach 2048, and You Win!";
-    document.getElementById("f1p").innerHTML="In the Menu you can choose to play on different sizes of grids listen to music!";
+        document.getElementById("f1p").innerHTML="Just click on the options and have fun!";
+    }
+    if(size>55){
+        document.getElementById("h1p").innerHTML="Pull the tiles from side to side to add same values to the next power of 2!";
+        document.getElementById("f2p").innerHTML="In the Menu you can choose to play on different sizes of grids listen to music!";
+    }
+    if(size>75){
+        document.getElementById("h2p").innerHTML="Reach 2048, and You Win!";
+    }
+    if(size>150){
+        document.getElementById("hextra").innerHTML="Beat yourself and others! As long as you do not close the window, it is going to remember to your best score!";
+        document.getElementById("fextra").innerHTML="The original 2048 Game was created by Gabriele Cirulli in 2014 and it is subject to the MIT licence.";
+    
+    }
 }
 function rmContentHF(){
     document.getElementById("htitle").innerHTML="";
@@ -113,12 +125,6 @@ function rmContentHF(){
     document.getElementById("f2p").innerHTML="";
     document.getElementById("hextra").innerHTML="";
     document.getElementById("fextra").innerHTML="";
-
-}
-//to add extra content and style if the header and footer enought big
-function addExtraHF(){
-    document.getElementById("hextra").innerHTML="Beat yourself or others! As long as you do not colse the window, it is going to remember to your best score!";
-    document.getElementById("fextra").innerHTML="The original 2048 Game was created by Gabriele Cirulli in 2014 and it is subject to the MIT licence.";
 
 }
 
