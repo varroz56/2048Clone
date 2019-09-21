@@ -28,7 +28,7 @@ var Game = new Phaser.Class({
         });
 
     },
- //-----------------------Preload Section
+    //-----------------------Preload Section
     // create preload function to load the tiles
     preload: function () {
         //load the tiles to the memory to be able to use it in the game and as a spritesheet to add options for animation
@@ -62,18 +62,18 @@ var Game = new Phaser.Class({
         this.load.audio("piano", "assets/sound/AmbientPiano.wav");
     },
 
-//----------------------Create section-----------------------------
+    //----------------------Create section-----------------------------
     // create create function to use the canvas as a grid and start the game adding the first tiles to it
     create: function () {
-//----------------------Load and Position media on the scene------------------
+        //----------------------Load and Position media on the scene------------------
         //position buttons on the canvas and set to interactive to be able to act as button
         this.Rbtn = this.add.image(this.buttonCoordinate(1, 1), 55, "resetButton").setInteractive();
-        this.Ibtn = this.add.image((this.buttonCoordinate(1,1)+110), 55, "infoButton").setInteractive();
+        this.Ibtn = this.add.image((this.buttonCoordinate(1, 1) + 110), 55, "infoButton").setInteractive();
         this.Mbtn = this.add.sprite(this.buttonCoordinate(1, 3), 55, "musicButtons").setInteractive();
         this.by3btn = this.add.sprite(this.buttonCoordinate(2, 1), 160, "sizeButtons").setInteractive();
         this.by4btn = this.add.sprite(this.buttonCoordinate(2, 2), 160, "sizeButtons").setInteractive();
         this.by5btn = this.add.sprite(this.buttonCoordinate(2, 3), 160, "sizeButtons").setInteractive();
-//---------------------Check and set current Button and Score states regarding to canvas size and saved state--------------
+        //---------------------Check and set current Button and Score states regarding to canvas size and saved state--------------
         //call setCurrentButtons to set the frames to the game's current status
         this.setCurrentButtons();
         //add sound and if the sound was on before, play the music 
@@ -97,7 +97,7 @@ var Game = new Phaser.Class({
             fill: '#facc78'
         });
 
-//-----------------Create Playfield and give relative position to tiles-----------------
+        //-----------------Create Playfield and give relative position to tiles-----------------
 
         //Create array to store the tile position and tile values
         this.playFieldArray = [];
@@ -126,17 +126,19 @@ var Game = new Phaser.Class({
             }
         }
 
-//--------------------Handle button click to store session data and to recall them with new config sttings------
+        //--------------------Handle button click to store session data and to recall them with new config sttings------
         //on btn click call restart function to reset the game to the given size
         this.Rbtn.on("pointerdown", function (pointer) {
             this.saveBest();
             score = 0;
+            won = false;
             piano.stop();
             this.scene.restart();
         }, this);
         this.by3btn.on("pointerdown", function (pointer) {
             this.saveBest();
             score = 0;
+            won = false;
             var size = 3;
             var n = size.toString();
             sessionStorage.setItem("playFieldSize", n);
@@ -145,6 +147,7 @@ var Game = new Phaser.Class({
         this.by4btn.on("pointerdown", function (pointer) {
             this.saveBest();
             score = 0;
+            won = false;
             var size = 4;
             var n = size.toString();
             sessionStorage.setItem("playFieldSize", n);
@@ -153,6 +156,7 @@ var Game = new Phaser.Class({
         this.by5btn.on("pointerdown", function (pointer) {
             this.saveBest();
             score = 0;
+            won = false;
             var size = 5;
             var n = size.toString();
             sessionStorage.setItem("playFieldSize", n);
@@ -180,7 +184,7 @@ var Game = new Phaser.Class({
         }, this);
 
 
-//------------------------Handle user interaction to the playfield------------------
+        //------------------------Handle user interaction to the playfield------------------
 
         //call keyInput function to handle all permitted keystrokes
         this.input.keyboard.on("keydown", this.keyInput, this);
@@ -188,12 +192,12 @@ var Game = new Phaser.Class({
         this.input.on("pointerup", this.mouseInput, this);
         //add the first two tiles to the playfield
 
-//-------------------Add  new tile with a value of 2 to the playfield to a random position
+        //-------------------Add  new tile with a value of 2 to the playfield to a random position
         this.addTile();
         this.addTile();
 
     },
-//-------------------Check and set current Button and Score states regarding to canvas size and saved state----------------------
+    //-------------------Check and set current Button and Score states regarding to canvas size and saved state----------------------
     //create saveBest function to save best score to session storage
     saveBest: function () {
         if (score > sessionStorage.getItem("best")) {
@@ -261,7 +265,7 @@ var Game = new Phaser.Class({
         if (playSize() == 3) {
             if (row == 1) {
                 if (pos == 1) {
-                    return w / 8 ;
+                    return w / 8;
                 } else if (pos == 2) {
                     return w / 3 + 30;
                 } else if (pos == 3) {
@@ -281,62 +285,62 @@ var Game = new Phaser.Class({
 
         }
         // if its a 5by5
-        else if(playSize()==5){
-                    //for the top row elements
-        if (row == 1) {
-            if (pos == 1) {
-                return w / 10-25 ;
-            } else if (pos == 2) {
-                return w / 2 -95;
-            } else if (pos == 3) {
-                return w / 10*9;
-            }
-            //for the bottom row elemnts
-        } else if (row == 2) {
-            if (pos == 1) {
-                return w /3 -30;
-            } else if (pos == 2) {
-                return w / 2;
-            } else if (pos == 3) {
-                return w / 3*2 + 30;
-            }
-
-        }
-
-        }
-        //if its 4by4 or the first game default 4by4
-        else{
+        else if (playSize() == 5) {
+            //for the top row elements
             if (row == 1) {
                 if (pos == 1) {
-                    return w / 8-25;
+                    return w / 10 - 25;
                 } else if (pos == 2) {
-                    return w / 2 -95;
+                    return w / 2 - 95;
                 } else if (pos == 3) {
-                    return w / 8*7;
+                    return w / 10 * 9;
                 }
                 //for the bottom row elemnts
             } else if (row == 2) {
                 if (pos == 1) {
-                    return w /4 ;
+                    return w / 3 - 30;
                 } else if (pos == 2) {
                     return w / 2;
                 } else if (pos == 3) {
-                    return w / 4*3;
+                    return w / 3 * 2 + 30;
                 }
-    
+
             }
-    
+
+        }
+        //if its 4by4 or the first game default 4by4
+        else {
+            if (row == 1) {
+                if (pos == 1) {
+                    return w / 8 - 25;
+                } else if (pos == 2) {
+                    return w / 2 - 95;
+                } else if (pos == 3) {
+                    return w / 8 * 7;
+                }
+                //for the bottom row elemnts
+            } else if (row == 2) {
+                if (pos == 1) {
+                    return w / 4;
+                } else if (pos == 2) {
+                    return w / 2;
+                } else if (pos == 3) {
+                    return w / 4 * 3;
+                }
+
+            }
+
         }
     },
 
-//----------------------------Create Playfield and give relative position to tiles----------------
+    //----------------------------Create Playfield and give relative position to tiles----------------
 
     //create tileCoordinate function to get a tile horizontal or vertical positon on the canvas calculating from tile size, spacing and using the its relative position on the grid
     tileCoordinate: function (relativePosition) {
         return relativePosition * (gameOptions.tileSize + gameOptions.tileSpacing) + gameOptions.tileSize / 2 + gameOptions.tileSpacing;
     },
 
-//------------------------------Add  new tile with a value of 2 to the playfield to a random position---------------
+    //------------------------------Add  new tile with a value of 2 to the playfield to a random position---------------
 
     //create addTile function to add a not empty tile to the field
     addTile: function () {
@@ -373,11 +377,19 @@ var Game = new Phaser.Class({
             this.fullFilled();
         }
     },
- 
- //-----------------------------------Handle user interaction to the playfield---------------------------
- 
+
+    //-----------------------------------Handle user interaction to the playfield---------------------------
+
     //create keyInput to simplify keyboard inputs and to call th moveTiles function later on
     keyInput: function (event) {
+        //check if won var is true, than don't move, just open the already won modal
+        if (won) {
+            $("#alreadyWonModal").modal();
+            return;
+
+        }
+
+
         //use switch to handle the four cases
         switch (event.code) {
             //If the user pressed a or the left arrow
@@ -403,6 +415,13 @@ var Game = new Phaser.Class({
     },
     //create mouseInput function to call move tiles upon mouse or swipe input
     mouseInput: function (event) {
+        //check if won var is true, than don't move, just open the already won modal
+        if (won) {
+            $("#alreadyWonModal").modal();
+            return;
+
+        }
+
         //using vectorial calculation to determine the movement direction
         //need to store the start and end coordinates
         var startX = event.downX;
@@ -466,7 +485,7 @@ var Game = new Phaser.Class({
 
     },
 
-//--------------------------------Trigger move or upgrade method-----------------------
+    //--------------------------------Trigger move or upgrade method-----------------------
 
 
     //create moveTiles function to move tiles upon user input
@@ -651,7 +670,7 @@ var Game = new Phaser.Class({
 
     },
 
-//---------------------------Execute move / or upgrade--------------------
+    //---------------------------Execute move / or upgrade--------------------
 
     //create moveTile to move individual tiles taking a direction string and the end position
     moveTile: function (str, i, j, k) {
@@ -711,27 +730,22 @@ var Game = new Phaser.Class({
         score += 10;
         scoreText.setText('Score: ' + score);
         //if the player reaches the 2048 tile, the player wins!
-        
 
 
 
+        //if any 
 
         if (this.playFieldArray[i][k].tileValue == 11 || this.playFieldArray[i][j].tileValue == 11) {
-            for(var m=0; m<gameOptions.playFieldSize; m++){
-                for(var n=0; n<gameOptions.playFieldSize;n++){
-                    console.log("sor: "+m+ " oszlop: "+n+" " +this.playFieldArray[m][n].tileValue);
-                }
-            }
-    
+            won = true;
             //open winner meassage
-            $("#winModal").modal();            
+            $("#winModal").modal();
         }
 
 
     },
 
 
-//-----------------------------Check if the user has possible movements on a full playfield---------
+    //-----------------------------Check if the user has possible movements on a full playfield---------
 
     //create fullFilled function to check if theres a possible move when the playfield is full
     fullFilled: function () {
