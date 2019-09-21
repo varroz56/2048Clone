@@ -52,7 +52,10 @@ window.onload = function () {
     resize();
     // add event listener to follow window resize and call resize function
     window.addEventListener("resize", resize, false);
-    $("#infoModal").modal();
+    if(!infoShown()){
+        $("#infoModal").modal();
+        sessionStorage.setItem("infoShown", true);
+    }
 }
 
 //------------------------Content Scale-------------------------------
@@ -104,4 +107,9 @@ function musicState(){
         return 0;
     }
 
+}
+//create infoShown function to check session storage, unless this is the first time
+//the website was opened in this session the function returns true
+function infoShown(){
+    return sessionStorage.getItem("infoShown");
 }
