@@ -23,9 +23,16 @@ var gameOptions = {
     tileSpacing: 10,
     //as the game playfield is square need only one
     playFieldSize: playSize(),
-    //add menu button size
-    btnWidth : 200,
-    btnHeight :100
+    //add menu button sizes
+    sizeBtnWidth: 200,
+    sizebtnHeight: 80,
+    musicBtnWidth: 200,
+    musicBtnHeight: 100,
+    resetBtnWidth: 150,
+    resetBtnHeight: 100,
+    infoBtnWidth: 50,
+    infoBtnHeight: 100
+
 }
 
 //-----------------------Window.onload----------------------------------
