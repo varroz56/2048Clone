@@ -4,7 +4,7 @@
  * 
  * Window.onload function to calculate initial game scale and to initialize Phaser Game and to point to the Game scene
  * 
- * Content Scale with resize function including the add and rm Content functions to react to window size change and to add or remove content regarding to the given window size
+ * Content Scale with resize function 
  *
  *  Session storage section to store and read session storage variables to prevent data loss due refresh of the page
  */
@@ -52,6 +52,7 @@ window.onload = function () {
     resize();
     // add event listener to follow window resize and call resize function
     window.addEventListener("resize", resize, false);
+    $("#infoModal").modal();
 }
 
 //------------------------Content Scale-------------------------------
