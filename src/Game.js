@@ -24,7 +24,7 @@ var Game = new Phaser.Class({
     Extends: Phaser.Scene,
     initialize: function Game() {
         Phaser.Scene.call(this, {
-            key: "Game"
+            key: "Game",
         });
 
     },
@@ -127,7 +127,6 @@ var Game = new Phaser.Class({
         }
 
 //--------------------Handle button click to store session data and to recall them with new config sttings------
-        
         //on btn click call restart function to reset the game to the given size
         this.Rbtn.on("pointerdown", function (pointer) {
             this.saveBest();
@@ -712,7 +711,18 @@ var Game = new Phaser.Class({
         score += 10;
         scoreText.setText('Score: ' + score);
         //if the player reaches the 2048 tile, the player wins!
-        if (this.playFieldArray[i][k].tileValue == 10 || this.playFieldArray[i][j].tileValue == 10) {
+        
+
+
+
+
+        if (this.playFieldArray[i][k].tileValue == 11 || this.playFieldArray[i][j].tileValue == 11) {
+            for(var m=0; m<gameOptions.playFieldSize; m++){
+                for(var n=0; n<gameOptions.playFieldSize;n++){
+                    console.log("sor: "+m+ " oszlop: "+n+" " +this.playFieldArray[m][n].tileValue);
+                }
+            }
+    
             //open winner meassage
             $("#winModal").modal();            
         }
