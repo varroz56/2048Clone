@@ -1,26 +1,87 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>2048 Game</title>
-        <!--load Phaser API files-->
-        <script type="text/javascript" src="src/phaser.min.js"></script>
-        <!--load config and game files-->
-        <script type="text/javascript" src="src/Game.js"></script>
-        <script type="text/javascript" src="src/gameConfig.js"></script>
-        <link rel="stylesheet" type="text/css" href="style/style.css">
-    </head>
-    <body>
-        <header id="header">
-                <p id="htitle"></p>
-                <p id="h1p"></p>
-                <p id="h2p"></p>
-                <p id="hextra"></p>
-        </header>
-        <footer id="footer">
-                <p id="f1p"></p>
-                <p id="f2p"></p>
-                <p id="fextra"></p>
-        </footer>
-        
-    </body>
+
+<head>
+    <title>2048 Game</title>
+    <!--load Phaser API files-->
+    <script type="text/javascript" src="src/phaser.min.js"></script>
+    <!--load config and game files-->
+    <script type="text/javascript" src="src/Game.js"></script>
+    <script type="text/javascript" src="src/gameConfig.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <!--link in bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <!-- Modal -->
+    <div id="infoModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">2048 Game Information</h4>
+                </div>
+                <div class="modal-body">
+                    <h5>Pull the tiles with the same value on each other to double up and reach 2048! </h5>
+                    <h6>Earn points by joining the tiles and beat your best score!</h6>
+                    <ul>
+                        <li>Swipe, click or use the arrows/wasd keys on your keyboard</li>
+                        <li>Use the menu buttons to restart the current game or choose a different game size</li>
+                        <li>With the sound on/off button you can play or stop a song.</li>
+                        <li>To return to this information, click on the ? button.</li>
+                    </ul>
+                    <h5 id="history">Little history:</h5>
+                    <p>"2048 is a single-player sliding block puzzle game designed by Italian web developer <a href="https://gabrielecirulli.com/">Gabriele Cirulli</a> .
+                    2048 was originally written in JavaScript and CSS during a weekend, and released on March 9, 2014, as free and open-source software subject to the MIT license."</p>
+                    <p>From <a href="https://en.wikipedia.org/wiki/2048_(video_game)">Wikipedia</a></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="winModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Congratulation! You reached 2048!</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="loseModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ouch, no possible moves! Try Again!</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
 </html>
