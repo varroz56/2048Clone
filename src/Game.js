@@ -127,7 +127,8 @@ var Game = new Phaser.Class({
         }
 
 //--------------------Handle button click to store session data and to recall them with new config sttings------
-        //on btn click call restart function to setet the game
+        
+        //on btn click call restart function to reset the game to the given size
         this.Rbtn.on("pointerdown", function (pointer) {
             this.saveBest();
             score = 0;
@@ -158,6 +159,7 @@ var Game = new Phaser.Class({
             sessionStorage.setItem("playFieldSize", n);
             location.reload();
         }, this);
+        //Start or stop the music
         this.Mbtn.on("pointerdown", function (pointer) {
             if (musicState()) {
                 var music = 0;
@@ -173,6 +175,11 @@ var Game = new Phaser.Class({
                 this.Mbtn.setFrame(0);
             }
         }, this);
+        //add info button click to show info modal
+        this.Ibtn.on("pointerdown", function (pointer) {
+            $("#infoModal").modal();
+        }, this);
+
 
 //------------------------Handle user interaction to the playfield------------------
 
