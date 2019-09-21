@@ -1,4 +1,4 @@
-/***************gameConfig.js file structure
+/***************Game.js file structure
  * Sections:
  * Declaration of Game scene Phaser class
  *      This class declaration includes all functions related to gameplay
@@ -689,20 +689,10 @@ var Game = new Phaser.Class({
         //earn 10 points with the upgrade
         score += 10;
         scoreText.setText('Score: ' + score);
-
+        //if the player reaches the 2048 tile, the player wins!
         if (this.playFieldArray[i][k].tileValue == 10 || this.playFieldArray[i][j].tileValue == 10) {
-            bestScore.visible = false;
-            scoreText, visible = false;
-            overText = this.add.text(this.buttonCoordinate(1, 2) - 25, 55, 'You Won! ', {
-                fontSize: '35px',
-                fill: '#CC3425',
-            });
-            scoreText = this.add.text(this.buttonCoordinate(1, 2), 15, 'Score: ' + score, {
-                fontSize: '32px',
-                fill: '#facc78'
-            });
-
-
+            //open winner meassage
+            $("#winModal").modal();            
         }
 
 
@@ -727,6 +717,8 @@ var Game = new Phaser.Class({
                 //exceptions the bottom line and the right side colas there is either right or down side missing
                 //bottom line
                 if ((i == (gameOptions.playFieldSize - 1)) && (j == gameOptions.playFieldSize - 1)) {
+                    //player lost, open loser modal, amend score display field
+                    $("#loseModal").modal();
                     scoreText.visible = false;
                     overText = this.add.text(this.buttonCoordinate(1, 2) - 25, 55, 'Game Over! ', {
                         fontSize: '35px',
