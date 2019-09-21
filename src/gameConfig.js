@@ -16,6 +16,8 @@ var game;
 //create score and scoretext global var to set to update in pgrade function
 var score=0;
 var scoreText;
+//create won global variable to set to true if the player already won in the current game
+var won = false; 
 //to be able to change later on easely
 var gameOptions = {
     //set tile size and spacing
