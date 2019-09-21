@@ -37,12 +37,26 @@ var Game = new Phaser.Class({
             frameWidth: gameOptions.tileSize,
             frameHeight: gameOptions.tileSize
         });
-        //load button spritesheet to the game memory
-        this.load.spritesheet("buttons", "assets/sprites/buttons.png", {
+        //load button spritesheets to the game memory
+        this.load.spritesheet("sizeButtons", "assets/sprites/sizeBtns.png", {
             //set the size of the tiles to correct canvas/window size
-            frameWidth: gameOptions.btnWidth,
-            frameHeight: gameOptions.btnHeight
+            frameWidth: gameOptions.sizeBtnWidth,
+            frameHeight: gameOptions.sizebtnHeight
         });
+        this.load.spritesheet("musicButtons", "assets/sprites/musicBtns.png", {
+            //set the size of the tiles to correct canvas/window size
+            frameWidth: gameOptions.musicBtnWidth,
+            frameHeight: gameOptions.musicBtnHeight
+        });
+        this.load.image("resetButton", "assets/sprites/resetBtn.png", {
+            frameWidth: gameOptions.resetBtnWidth,
+            frameHeight: gameOptions.resetBtnHeight
+        });
+        this.load.image("infoButton", "assets/sprites/infoBtn.png", {
+            frameWidth: gameOptions.infoBtnWidth,
+            frameHeight: gameOptions.infoBtnHeight
+        });
+
         //load music file to memory
         //Downloaded from: https://www.dl-sounds.com/royalty-free/ambient-piano/
         this.load.audio("piano", "assets/sound/AmbientPiano.wav");
@@ -53,11 +67,12 @@ var Game = new Phaser.Class({
     create: function () {
 //----------------------Load and Position media on the scene------------------
         //position buttons on the canvas and set to interactive to be able to act as button
-        this.NGbtn = this.add.sprite(this.buttonCoordinate(1, 1), 55, "buttons").setInteractive();
-        this.Sbtn = this.add.sprite(this.buttonCoordinate(1, 3), 55, "buttons").setInteractive();
-        this.by3btn = this.add.sprite(this.buttonCoordinate(2, 1), 160, "buttons").setInteractive();
-        this.by4btn = this.add.sprite(this.buttonCoordinate(2, 2), 160, "buttons").setInteractive();
-        this.by5btn = this.add.sprite(this.buttonCoordinate(2, 3), 160, "buttons").setInteractive();
+        this.Rbtn = this.add.image(this.buttonCoordinate(1, 1), 55, "resetButton").setInteractive();
+        this.Ibtn = this.add.image((this.buttonCoordinate(1,1)+110), 55, "infoButton").setInteractive();
+        this.Mbtn = this.add.sprite(this.buttonCoordinate(1, 3), 55, "musicButtons").setInteractive();
+        this.by3btn = this.add.sprite(this.buttonCoordinate(2, 1), 160, "sizeButtons").setInteractive();
+        this.by4btn = this.add.sprite(this.buttonCoordinate(2, 2), 160, "sizeButtons").setInteractive();
+        this.by5btn = this.add.sprite(this.buttonCoordinate(2, 3), 160, "sizeButtons").setInteractive();
 //---------------------Check and set current Button and Score states regarding to canvas size and saved state--------------
         //call setCurrentButtons to set the frames to the game's current status
         this.setCurrentButtons();
@@ -113,7 +128,7 @@ var Game = new Phaser.Class({
 
 //--------------------Handle button click to store session data and to recall them with new config sttings------
         //on btn click call restart function to setet the game
-        this.NGbtn.on("pointerdown", function (pointer) {
+        this.Rbtn.on("pointerdown", function (pointer) {
             this.saveBest();
             score = 0;
             piano.stop();
@@ -143,19 +158,19 @@ var Game = new Phaser.Class({
             sessionStorage.setItem("playFieldSize", n);
             location.reload();
         }, this);
-        this.Sbtn.on("pointerdown", function (pointer) {
+        this.Mbtn.on("pointerdown", function (pointer) {
             if (musicState()) {
                 var music = 0;
                 var m = music.toString();
                 sessionStorage.setItem("musicState", m);
                 piano.stop();
-                this.Sbtn.setFrame(2);
+                this.Mbtn.setFrame(1);
             } else {
                 var music = 1;
                 var m = music.toString();
                 sessionStorage.setItem("musicState", m);
                 piano.play();
-                this.Sbtn.setFrame(1);
+                this.Mbtn.setFrame(0);
             }
         }, this);
 
@@ -195,7 +210,7 @@ var Game = new Phaser.Class({
     //to handle each button type separate, create setSoundBtn and setSizeBtn functions 
     setCurrentButtons: function () {
         //new game button always the same
-        this.NGbtn.setFrame(0);
+        this.Rbtn.setFrame(0);
         //call setSoundBtn function to set music on or off button
         this.setSoundBtn();
         //call setSizeBtn function to set current play filed size button
@@ -204,9 +219,9 @@ var Game = new Phaser.Class({
     setSoundBtn: function () {
         //check music state
         if (musicState()) {
-            this.Sbtn.setFrame(1);
+            this.Mbtn.setFrame(0);
         } else {
-            this.Sbtn.setFrame(2);
+            this.Mbtn.setFrame(1);
         }
 
     },
@@ -214,19 +229,19 @@ var Game = new Phaser.Class({
         //check current play field size
         var size = playSize();
         //set everything to not active color
-        this.by3btn.setFrame(3);
-        this.by4btn.setFrame(5);
-        this.by5btn.setFrame(7);
+        this.by3btn.setFrame(1);
+        this.by4btn.setFrame(3);
+        this.by5btn.setFrame(5);
         //set the current one to active color
         if (size == 3) {
-            this.by3btn.setFrame(4);
+            this.by3btn.setFrame(0);
 
         } else if (size == 4) {
-            this.by4btn.setFrame(6);
+            this.by4btn.setFrame(2);
 
         }
         if (size == 5) {
-            this.by5btn.setFrame(8);
+            this.by5btn.setFrame(4);
         }
 
     },
