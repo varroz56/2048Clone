@@ -255,20 +255,20 @@ var Game = new Phaser.Class({
         if (playSize() == 3) {
             if (row == 1) {
                 if (pos == 1) {
-                    return w / 8 + 20;
+                    return w / 8 ;
                 } else if (pos == 2) {
                     return w / 3 + 30;
                 } else if (pos == 3) {
-                    return w / 8 * 7 - 20;
+                    return w / 8 * 7 - 25;
                 }
                 //for the bottom row elemnts
             } else if (row == 2) {
                 if (pos == 1) {
-                    return w / 8 + 20;
+                    return w / 8 + 25;
                 } else if (pos == 2) {
                     return w / 2;
                 } else if (pos == 3) {
-                    return w / 8 * 7 - 20;
+                    return w / 8 * 7 - 25;
                 }
 
             }
@@ -279,7 +279,7 @@ var Game = new Phaser.Class({
                     //for the top row elements
         if (row == 1) {
             if (pos == 1) {
-                return w / 10 ;
+                return w / 10-25 ;
             } else if (pos == 2) {
                 return w / 2 -95;
             } else if (pos == 3) {
@@ -302,7 +302,7 @@ var Game = new Phaser.Class({
         else{
             if (row == 1) {
                 if (pos == 1) {
-                    return w / 8;
+                    return w / 8-25;
                 } else if (pos == 2) {
                     return w / 2 -95;
                 } else if (pos == 3) {
