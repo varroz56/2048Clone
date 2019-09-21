@@ -43,6 +43,10 @@ window.onload = function () {
     var gameConfig = {
         //Choosing Phaser canvas to use as a html canvas element
         type: Phaser.CANVAS,
+        wheel: false,
+        mousewheel: false,
+        touchcancel: false,
+
         //set the square canvas size, given the size of the tiles and spacing around them
         //give 200px to the height for menu buttons
         width: gameOptions.tileSize * gameOptions.playFieldSize + gameOptions.tileSpacing * (gameOptions.playFieldSize + 1),
@@ -63,6 +67,7 @@ window.onload = function () {
         $("#infoModal").modal();
         sessionStorage.setItem("infoShown", true);
     }
+    
 }
 
 //------------------------Content Scale-------------------------------
