@@ -190,6 +190,7 @@ var Game = new Phaser.Class({
         this.input.keyboard.on("keydown", this.keyInput, this);
         //add input listener for pointer
         this.input.on("pointerup", this.mouseInput, this);
+        this.input.on("pointerupoutside", this.mouseInput, this);
         //add the first two tiles to the playfield
 
         //-------------------Add  new tile with a value of 2 to the playfield to a random position
@@ -470,12 +471,18 @@ var Game = new Phaser.Class({
         //using vectorial calculation to determine the movement direction
         //need to store the start and end coordinates
         var startX = event.downX;
-
         var startY = event.downY;
-
         var endX = event.upX;
-
         var endY = event.upY;
+      
+        //make movement input disabled in the menu area
+        //get the canvas width to determine the max x coordinate
+        var canvas = document.querySelector("canvas");
+        var max = parseInt(canvas.style.width);
+        if((startX<=max && startY<=250) || (endX<=max && endY<=250)){
+            //To  prevent user click or swipe in menu area to trigger tile movement
+            return;
+        }
 
         //need two things: the steepness and the difference of the end and start coordinates
         //if the delta X is 0 can not divide with it; that is a vertical movement up or down
