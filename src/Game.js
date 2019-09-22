@@ -91,7 +91,7 @@ var Game = new Phaser.Class({
             fontSize: '32px',
             fill: '#facc78'
         });
-        //add best scoretext
+        //add best scoretext, the function getBest calls the saved value 
         bestScore = this.add.text(this.buttonCoordinate(1, 2), 15, 'Best: ' + this.getBest(), {
             fontSize: '32px',
             fill: '#facc78'
@@ -200,19 +200,64 @@ var Game = new Phaser.Class({
     //-------------------Check and set current Button and Score states regarding to canvas size and saved state----------------------
     //create saveBest function to save best score to session storage
     saveBest: function () {
-        if (score > sessionStorage.getItem("best")) {
-            var n = score.toString();
-            sessionStorage.setItem("best", n);
+        //get the playfield size
+        var s = playSize();
+        //check the size and then check if the session storage has anything stored, and if it has
+        // compare the two scores and save the bigger one
+        if (s == 3) {
+            if (score > sessionStorage.getItem("bestOn3")) {
+                //session storage can store string
+                var n = score.toString();
+                //save to session storage
+                sessionStorage.setItem("bestOn3", n);
+            }
 
-        }
+        } else if (s == 4) {
+            if (score > sessionStorage.getItem("bestOn4")) {
+                var n = score.toString();
+                sessionStorage.setItem("bestOn4", n);
+            }
+
+        } else {
+            if (score > sessionStorage.getItem("bestOn5")) {
+                var n = score.toString();
+                sessionStorage.setItem("bestOn5", n);
+            }
+
+        } 
     },
     //create getBest function to read bst score from session storage
     getBest: function () {
-        if (sessionStorage.getItem("best") > 0) {
-            var n = sessionStorage.getItem("best");
-            return parseInt(n);
+        //get the playfield size
+        var s = playSize();
+        //check the size and then check if the session storage has anything stored, and if it has
+        // compare the two scores and return the bigger one
+        if (s == 3) {
+            //compare the current and the saved one
+            if (sessionStorage.getItem("bestOn3") > 0) {
+                var n = sessionStorage.getItem("bestOn3");
+                return parseInt(n);
+            } else {
+                return 0;
+            }
+
+        } else if (s == 4) {
+            if (sessionStorage.getItem("bestOn4") > 0) {
+                var n = sessionStorage.getItem("bestOn4");
+                return parseInt(n);
+            } else {
+                return 0;
+            }
+
+        } else if (s == 5) {
+            if (sessionStorage.getItem("bestOn5") > 0) {
+                var n = sessionStorage.getItem("bestOn5");
+                return parseInt(n);
+            } else {
+                return 0;
+            }
         } else {
-            return 0;
+            return -1;
         }
     },
     //to set the buttons state need to check the playfieldsize and musicstate in session storage
