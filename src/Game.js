@@ -784,6 +784,8 @@ var Game = new Phaser.Class({
             won = true;
             //open winner meassage
             $("#winModal").modal();
+            this.saveBest()
+            bestScore.setText('Best: ' + this.getBest());
         }
 
 
@@ -815,11 +817,8 @@ var Game = new Phaser.Class({
                         fontSize: '35px',
                         fill: '#CC3425',
                     });
-                    bestScore = this.add.text(this.buttonCoordinate(1, 2), 15, 'Best: ' + this.getBest(), {
-                        fontSize: '32px',
-                        fill: '#facc78'
-                    });
-
+                    this.saveBest()
+                    bestScore.setText('Best: ' + this.getBest());
                     return true;
                 } else if (this.playFieldArray[i][j].tileValue == 0) {
                     return false;
