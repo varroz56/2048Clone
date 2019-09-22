@@ -12,16 +12,20 @@ body {
   background-color: #444 !important;
 }
 
+.modal {
+  font-size: 25px;
+}
+
 .modal-dialog {
   -webkit-transform: translate(0, -30%);
           transform: translate(0, -30%);
-  top: 20%;
   margin: 0 auto;
 }
 
 .modal-dialog .h1, .modal-dialog .h2, .modal-dialog .h3, .modal-dialog .h4, .modal-dialog .h5, .modal-dialog .h6, .modal-dialog h1, .modal-dialog h2, .modal-dialog h3, .modal-dialog h4, .modal-dialog h5, .modal-dialog h6 {
   font-weight: 600;
   text-align: center;
+  font-size: 25px;
 }
 
 .modal-dialog #history {

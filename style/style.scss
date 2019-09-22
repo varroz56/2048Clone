@@ -9,18 +9,23 @@ canvas {
 }
 //add background colour to the body
 body {
-    background-color: #CC3425 !important;
+    background-color: #444 !important;
 }
 //add style to modal elements
+.modal{
+    font-size: 25px;
+}
 .modal-dialog{
     //amend the position of the modal
     transform: translate(0, -30%);
-    top: 20%;
+
     margin: 0 auto;
+    
 //give style to heading elements and center them
     .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
         font-weight: 600;
         text-align: center;
+        font-size: 25px;
     }
     //align the history heading to the left in the game information modal
     #history{
