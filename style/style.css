@@ -34,7 +34,7 @@ body {
 
 @media only screen and (max-width: 768px) {
   .modal {
-    font-size: 35px;
+    font-size: 65px;
   }
   .modal-dialog {
     -webkit-transform: translate(0, -30%);
@@ -44,7 +44,7 @@ body {
   .modal-dialog .h1, .modal-dialog .h2, .modal-dialog .h3, .modal-dialog .h4, .modal-dialog .h5, .modal-dialog .h6, .modal-dialog h1, .modal-dialog h2, .modal-dialog h3, .modal-dialog h4, .modal-dialog h5, .modal-dialog h6 {
     font-weight: 600;
     text-align: center;
-    font-size: 35px;
+    font-size: 65px;
   }
   .modal-dialog #history {
     text-align: left;
