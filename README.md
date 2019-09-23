@@ -48,9 +48,9 @@ Had to deviate from the initial design concept of the skeleton and structure pla
 
 ### User stories
 
-- User A  as a new user opens the web page for the first time and the information modal shows up, A reads it through and closes the modal either clicking on the top right corner X  or the close button and the game with the default game size starts.
-- User A  as a new opens the web page for the first time and the information modal shows up, A reads it through, but accidentally clicks outside of the modal and the modal closes, the game with the default game size starts.
-- User A  as a new opens the web page for the first time and the information modal shows up, A accidentally clicks outside of the modal  or the close buttons  located on the modal before can read through, and the modal closes, and the game with the default game size starts. In this case, A can reopen the information modal by clicking on the "?" mark button next to the Reset button.
+- User A  as a new user opens the web page and the information modal shows up, A reads it through and closes the modal either clicking on the top right corner X  or the close button and the game with the default game size starts.
+- User A  as a new user opens the web page and the information modal shows up, A reads it through, but accidentally clicks outside of the modal and the modal closes, the game with the default game size starts.
+- User A  as a new user opens the web page and the information modal shows up, A accidentally clicks outside of the modal  or the close buttons  located on the modal before can read through, and the modal closes, and the game with the default game size starts. In this case, A can reopen the information modal by clicking on the "?" mark button next to the Reset button.
 - User A as a returning user forgets about something from the game information, A can reopen the modal at any time during the game with clicking on the "?" mark button without losing the game state.
 - User B as a returning user playing the game wants to start a new game in the current game mode (the size of the grid), B can either click on the Reset button located on the top left corner or on the button showing the same size as the current one in the second row from the menu. The current size button has different colour from the other two options to help the user.
 - User B as a new or returning user playing the game and just want to try a different game mode during the game, can click on the desired mode button located in the second row of the menu. The current one has different colour from the other two options to help the user.
@@ -123,6 +123,10 @@ A better music selection and option to change tile colours.
 [Typora](https://typora.io/): To edit the markdown files.
 
 ## Testing
+
+The html and css files have been checked against the [w3](https://www.w3.org/) validator producing no errors, no warnings. The  links to the check results:
+
+[index.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fvarroz56.github.io%2F2048Clone%2F) , [style.css](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fvarroz56.github.io%2F2048Clone%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
 
 The site have been tested by users and the developer, the testing section can be found in the [TESTING](TESTING.md) file due to its size.
 
