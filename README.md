@@ -44,7 +44,11 @@ Had to deviate from the initial design concept of the skeleton and structure pla
 
 #### Menu Area
 
-Every button images can be found in the [sprites](assets/sprites) folder in png format, and where the button has more than one state e.g current and not current, and all the game mode images are stored in the same file and the used frame is called when wanted to being showed. The images loaded to the memory in [Game.js](src/Game.js) preload section and added to the canvas in the create section. All button click events handled in the "Handle button click to store session data and to recall them with new config sttings" section. When a button clicked (except "?" and Music) the current score going to be checked against the best score to set it again if needed, the current score going to be 0, the won global variable going to be false regardless its previous state. Any additional will be stated below in each case.
+Every button images can be found in the [sprites](assets/sprites) folder in png format, and where the button has more than one state e.g current and not current, and all the game mode images are stored in the same file and the used frame is called when wanted to being showed. The images loaded to the memory in [Game.js](src/Game.js) preload section and added to the canvas in the create section. 
+
+All button click events handled in the "Handle button click to store session data and to recall them with new config settings" section. When a button clicked (except "?" and Music) the current score going to be checked against the best score to set it again if needed, the current score going to be 0, the won global variable going to be false regardless its previous state.
+
+ Any additional will be stated below in each case.
 
 - Reset Button: Allows users to restart the current game mode by clicking on it. The game will restart, not triggering page reload. File location: [sprites](assets/sprites/resetBtn.png).
 - "?" button: Allows users to see the game information by clicking on it. when the user clicked on it, the game information modal will be showed in front of the game canvas. The html code of the modal can be found in the [index](index.html) file modal section. File location: [sprites](assets/sprites/infoBtn.png).
@@ -55,7 +59,11 @@ Every button images can be found in the [sprites](assets/sprites) folder in png 
 
 #### Game area
 
-The game area where the user can play the game, using the "wasd" or arrow keys, or mouse or swipe on touch-enabled devices. The images for the game tiles are located in the [sprites](assets/sprites/tiles.png) folder 
+The game area where the user can play the game, using the "wasd" or arrow keys, mouse or swipe on touch-enabled devices. The images for the game tiles are located in the [sprites](assets/sprites/tiles.png) folder. There are event listeners to handle user inputs and call the appropriate functions to trigger actions. The event listeners are located in [Game.js](src/Game.js) "Handle user interaction to the play field" section. 
+
+
+
+
 
 
 
