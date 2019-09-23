@@ -54,26 +54,53 @@ All button click events handled in the "Handle button click to store session dat
 - "?" button: Allows users to see the game information by clicking on it. when the user clicked on it, the game information modal will be showed in front of the game canvas. The html code of the modal can be found in the [index](index.html) file modal section. File location: [sprites](assets/sprites/infoBtn.png).
 - Best: Shows the user's best score for the current game mode. The best score being stored in the session storage of the browser, so as long as the user does not end that session the information remain and can be viewed even after refreshing the page. The code for the "saveBest" and "getBest" functions what handles the best score can be find in [Game.js](src/Game.js) in the "Check and set current Button and Score states regarding to canvas size and saved state" section. The code to add the best score text to canvas can be find in the "Check and set current Button and Score states regarding to canvas size and saved state" section.
 - Score:  Shows the user's current score and updating at every upgrade (addition). The addition can be find in the  [Game.js](src/Game.js) "Execute move / or upgrade" section "upgradeTile" function.  The code to add the score text to canvas can be find in the "Check and set current Button and Score states regarding to canvas size and saved state" section.
-- Turn Music On/Off button: Allows the user to turn on/off music and this state will be saved to the session storage to remember when the page is refreshed. File location: [sprites](assets/sprites/musicBtns.png).
+- Turn Music On/Off button: Allows the user to turn on/off music and this state will be saved to the session storage to remember when the page is refreshed. File location: [sprites](assets/sprites/musicBtns.png). The code located in [gameConfig](src/gameConfig.js) "Session Storage" section.
 - 3x3, 4x4,5x5 buttons: Allows the user to change (or restart if the current one) the current game mode to another one. In this case the game mode going to be saved to the session storage, as the game mode change comes with the canvas size change too and for this the page is going to be reloaded. File location: [sprites](assets/sprites/sizeBtns.png).
 
 #### Game area
 
 The game area where the user can play the game, using the "wasd" or arrow keys, mouse or swipe on touch-enabled devices. The images for the game tiles are located in the [sprites](assets/sprites/tiles.png) folder. There are event listeners to handle user inputs and call the appropriate functions to trigger actions. The event listeners are located in [Game.js](src/Game.js) "Handle user interaction to the play field" section. 
 
+- Keyboard inputs allows the user to interact with the game. Each input (w or arrow up, a or arrow left, s or arrow down, d or arrow right), if there is a possible move, move the tiles in the given direction. When there is no possible movement into that direction, nothing happen.
+- Mouse or touch movements allows the user to move the tiles in the direction the pointer was moved. with mouse this happens when the user clicks and holds the left button on the mouse while move the mouse. On touch devices this happens when the user swipes in a direction.
 
+#### Not area related features
 
+- If the page opened at first time, the game information modal shows the user the game rules and information about the game controls, options, additional information about the original game. To prevent the modal to show up again and again when the user plays the game, the state the it has been showed saved to the session storage.  The code located in [gameConfig](src/gameConfig.js) "Session Storage" section.
+- When the user won or lost the game, the game area input methods disabled and a win or lose modal shows up to let the user know that he/she won or lost and allow the user to click on one of the game options in the menu. When the user won and still wants to interact with the game area (as there should be empty space) another modal shows up to let the user know that he/she already won, need to start a new game.
+- The game canvas allows the user change the window size at any time during the game and change its size immediately to allow the user to play on the biggest possible canvas. 
 
+#### Future ideas
 
-
+A user database would be good to keep track of user number, activity, preferred game mode, and to allow users to share and compare their best scores online and immediately.
 
 ### Features left to implement
 
+A better music selection and option to change tile colours.
+
 ## Technologies Used
+
+[Html](https://whatwg.org/) : To display the document in the web browser
+
+[SCSS](https://sass-lang.com/documentation/syntax) : To customise the document layout.
+
+[jQuery](https://jquery.com/) : To simplify DOM manipulation.
+
+[Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) : To use Phaser3 API and to implement interactive web page.
+
+[Phaser3 API](https://phaser.io/phaser3) : To use as the game's framework.
+
+[Git](https://git-scm.com/) : For version control.
+
+[Github](https://github.com/) : To publish the website .
+
+[VsCode](https://code.visualstudio.com/) : For code editing.
 
 ## Testing
 
 ## Deployment
+
+The 
 
 ## Credits
 
