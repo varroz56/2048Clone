@@ -42,6 +42,23 @@ Had to deviate from the initial design concept of the skeleton and structure pla
 
 ### Existing Features
 
+#### Menu Area
+
+Every button images can be found in the [sprites](assets/sprites) folder in png format, and where the button has more than one state e.g current and not current, and all the game mode images are stored in the same file and the used frame is called when wanted to being showed. The images loaded to the memory in [Game.js](src/Game.js) preload section and added to the canvas in the create section. All button click events handled in the "Handle button click to store session data and to recall them with new config sttings" section. When a button clicked (except "?" and Music) the current score going to be checked against the best score to set it again if needed, the current score going to be 0, the won global variable going to be false regardless its previous state. Any additional will be stated below in each case.
+
+- Reset Button: Allows users to restart the current game mode by clicking on it. The game will restart, not triggering page reload. File location: [sprites](assets/sprites/resetBtn.png).
+- "?" button: Allows users to see the game information by clicking on it. when the user clicked on it, the game information modal will be showed in front of the game canvas. The html code of the modal can be found in the [index](index.html) file modal section. File location: [sprites](assets/sprites/infoBtn.png).
+- Best: Shows the user's best score for the current game mode. The best score being stored in the session storage of the browser, so as long as the user does not end that session the information remain and can be viewed even after refreshing the page. The code for the "saveBest" and "getBest" functions what handles the best score can be find in [Game.js](src/Game.js) in the "Check and set current Button and Score states regarding to canvas size and saved state" section. The code to add the best score text to canvas can be find in the "Check and set current Button and Score states regarding to canvas size and saved state" section.
+- Score:  Shows the user's current score and updating at every upgrade (addition). The addition can be find in the  [Game.js](src/Game.js) "Execute move / or upgrade" section "upgradeTile" function.  The code to add the score text to canvas can be find in the "Check and set current Button and Score states regarding to canvas size and saved state" section.
+- Turn Music On/Off button: Allows the user to turn on/off music and this state will be saved to the session storage to remember when the page is refreshed. File location: [sprites](assets/sprites/musicBtns.png).
+- 3x3, 4x4,5x5 buttons: Allows the user to change (or restart if the current one) the current game mode to another one. In this case the game mode going to be saved to the session storage, as the game mode change comes with the canvas size change too and for this the page is going to be reloaded. File location: [sprites](assets/sprites/sizeBtns.png).
+
+#### Game area
+
+The game area where the user can play the game, using the "wasd" or arrow keys, or mouse or swipe on touch-enabled devices. The images for the game tiles are located in the [sprites](assets/sprites/tiles.png) folder 
+
+
+
 ### Features left to implement
 
 ## Technologies Used
