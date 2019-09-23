@@ -4,8 +4,24 @@ A simple and fun game to leave stress and other commitments behind for a couple 
 
 ## Table of content
 
-[TOC]
-
+  * [UX design](#ux-design)
+    + [Initial design wire-frames / mock-ups:](#initial-design-wire-frames---mock-ups-)
+    + [User stories](#user-stories)
+  * [Features](#features)
+    + [Existing Features](#existing-features)
+      - [Menu Area](#menu-area)
+      - [Game area](#game-area)
+      - [Not area related features](#not-area-related-features)
+      - [Future ideas](#future-ideas)
+    + [Features left to implement](#features-left-to-implement)
+  * [Technologies Used](#technologies-used)
+  * [Testing](#testing)
+  * [Deployment](#deployment)
+  * [Credits](#credits)
+    + [Content](#content)
+    + [Media](#media)
+    + [Acknowledgement](#acknowledgement)
+    + [License](#license)
 
 
 ## UX design
@@ -106,7 +122,7 @@ A better music selection and option to change tile colours.
 
 [Typora](https://typora.io/): To edit the markdown files.
 
-## [Testing](TESTING.md)
+## Testing
 
 The site have been tested by users and the developer, the testing section can be found in the [TESTING](TESTING.md) file due to its size.
 
@@ -145,6 +161,8 @@ The music have been downloaded from the [DL-Sounds](https://www.dl-sounds.com/ro
 For the development and how to use Phaser 3 API the developer used various channels, tutorials, including 
 
 [Phaser examples](https://phaser.io/examples), [Emanuel Feronato's](https://www.emanueleferonato.com/) tutorials (the core of the resize function for the canvas and to set up the group for the grid). Later on , when there was a working framework, the the functions and the logic behind them are the developer's ideas using examples and tutorials to debug.
+
+<a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a>
 
 ### License
 
