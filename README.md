@@ -128,6 +128,8 @@ The html and css files have been checked against the [w3](https://www.w3.org/) v
 
 [index.html](https://validator.w3.org/nu/?doc=https%3A%2F%2Fvarroz56.github.io%2F2048Clone%2F) , [style.css](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fvarroz56.github.io%2F2048Clone%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
 
+The Game.js and gameConfig files have been checked against jshint, and no problems have been detected.
+
 The site have been tested by users and the developer, the testing section can be found in the [TESTING](TESTING.md) file due to its size.
 
 ## Deployment
