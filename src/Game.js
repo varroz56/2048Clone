@@ -128,11 +128,17 @@ var Game = new Phaser.Class({
 
         //--------------------Handle button click to store session data and to recall them with new config sttings------
         //on btn click call restart function to reset the game to the given size
+        //Reset button clicked
         this.Rbtn.on("pointerdown", function (pointer) {
+            //update best score if needed(saveBest handles comparison)
             this.saveBest();
+            //set score to 0
             score = 0;
+            //make sure won var is false
             won = false;
+            //stop the song (it doesnt need if because no errors if the song was already stopped)
             piano.stop();
+            //restart the current scene
             this.scene.restart();
         }, this);
         this.by3btn.on("pointerdown", function (pointer) {
@@ -141,7 +147,10 @@ var Game = new Phaser.Class({
             won = false;
             var size = 3;
             var n = size.toString();
+            //set the game mode in the session storage
             sessionStorage.setItem("playFieldSize", n);
+            //need to reload the page because Phaser would start another 
+            //instance on the top of the existing one if it's just stopped/removed and the new starts and that is the reason to use session storage
             location.reload();
         }, this);
         this.by4btn.on("pointerdown", function (pointer) {
@@ -165,10 +174,13 @@ var Game = new Phaser.Class({
         //Start or stop the music
         this.Mbtn.on("pointerdown", function (pointer) {
             if (musicState()) {
+                //set opposite music state to session storage/could use true false too
                 var music = 0;
                 var m = music.toString();
                 sessionStorage.setItem("musicState", m);
+                //stop song
                 piano.stop();
+                //set the button to the Turn Music On frame
                 this.Mbtn.setFrame(1);
             } else {
                 var music = 1;
@@ -236,7 +248,9 @@ var Game = new Phaser.Class({
         if (s == 3) {
             //compare the current and the saved one
             if (sessionStorage.getItem("bestOn3") > 0) {
+                //returns the stored best score
                 var n = sessionStorage.getItem("bestOn3");
+                //as this is a string need to convert to int
                 return parseInt(n);
             } else {
                 return 0;
@@ -303,6 +317,7 @@ var Game = new Phaser.Class({
     },
     //create button coordinate function return an x coordinate based on row and position
     //2 rows for menu and 1-3 positions
+    //these positions not calculated through, it was subjective decision
     buttonCoordinate: function (row, pos) {
         //get canvas width
         var w = document.querySelector("canvas").width;
@@ -441,6 +456,7 @@ var Game = new Phaser.Class({
             //If the user pressed a or the left arrow
             case "KeyA":
             case "ArrowLeft":
+                //triggers the function to mov the tiles to the left
                 this.moveTiles("left");
                 break;
             case "KeyS":
@@ -495,12 +511,12 @@ var Game = new Phaser.Class({
             if (deltaY == 0) {
                 return;
             }
-            //if delta y less than 0 then it's an upwards movement
+            //if delta y less than 0 then it's an downwards movement
             else if (deltaY < 0) {
                 this.moveTiles("down");
                 return;
             }
-            //if delta y more than 0 then it's an downwards movement
+            //if delta y more than 0 then it's an upwards movement
             else {
                 this.moveTiles("up");
                 return;
@@ -569,15 +585,19 @@ var Game = new Phaser.Class({
                                 } else {
                                     //if there is no empty tile but there is an upgradeable one, call upgradeTile
                                     if (this.playFieldArray[i][j].tileValue == this.playFieldArray[i][k].tileValue && this.playFieldArray[i][k].upgradeable) {
+                                        //set tile in way to false before check
                                         tileInWay = false;
+                                        //go through all the tiles to the direction of the move till it reaches the upgradeable tile
                                         for (var l = k + 1; l < j; l++) {
+                                            //if there is something in the way, set the tileinway to true and prevent to move on to the next tile
                                             if (this.playFieldArray[i][l].tileValue != 0) {
                                                 tileInWay = true;
                                                 break;
                                             }
-                                        }
+                                        }//if there is no tile in the way call upgrade function
                                         if (!tileInWay) {
                                             this.upgradeTile("left", i, j, k);
+                                            //set wasmove to true
                                             wasMove = true;
                                             //move on to the next not enmpty tile
                                             break;
@@ -730,7 +750,7 @@ var Game = new Phaser.Class({
         switch (str) {
             case "left":
             case "right":
-                //copy the tile to the empty tile
+                //copy the tile attributes to the empty tile's attributes
                 this.playFieldArray[i][k].tileValue = this.playFieldArray[i][j].tileValue;
                 this.playFieldArray[i][k].tileSprite.visible = true;
                 this.playFieldArray[i][k].tileSprite.alpha = 1;
@@ -753,21 +773,30 @@ var Game = new Phaser.Class({
     },
     //create upgradeTile function to upgrade two tiles in movement taking a direction string and and three coordinates
     upgradeTile: function (str, i, j, k) {
-        //four directions
+        //str will be the direction, i, j, the one going to disappear
+        //k is one of the coordinates of the upgradeable tile depending on the direction
+        //and the other coordinate is i or j depending on the direction
+        //four directions but the upgrade is the same in two and two
         switch (str) {
             case "left":
             case "right":
-                //copy the tile to the empty tile
+                //In this case  the row is the same, so k is the y coordinate or the col number
+                //increase the tile value by one   
                 this.playFieldArray[i][k].tileValue += 1;
+                //make sure the tile visible
                 this.playFieldArray[i][k].tileSprite.visible = true;
                 this.playFieldArray[i][k].tileSprite.alpha = 1;
+                //set the tile to the next frame, as the tile value is bigger by 1 
+                //(tilevalue for the empty tile is 0, frame number starts 0 with the number 2 tile sprite)
                 this.playFieldArray[i][k].tileSprite.setFrame(this.playFieldArray[i][k].tileValue - 1);
+                //make it unable for further upgrades
                 this.playFieldArray[i][k].upgradeable = false;
+                //case end
                 break;
 
             case "up":
             case "down":
-                //copy the tile to the empty tile
+                
                 this.playFieldArray[k][j].tileValue += 1;
                 this.playFieldArray[k][j].tileSprite.visible = true;
                 this.playFieldArray[k][j].tileSprite.alpha = 1;
@@ -775,22 +804,24 @@ var Game = new Phaser.Class({
                 this.playFieldArray[k][j].upgradeable = false;
                 break;
         }
+        //set the upgrader tile place to empty and invisible
         this.playFieldArray[i][j].tileValue = 0;
         this.playFieldArray[i][j].tileSprite.visible = false;
         this.playFieldArray[i][j].tileSprite.alpha = 0;
+
         //earn 10 points with the upgrade
         score += 10;
         scoreText.setText('Score: ' + score);
+        
         //if the player reaches the 2048 tile, the player wins!
-
-
-
-        //if any 
-
-        if (this.playFieldArray[i][k].tileValue == 11 || this.playFieldArray[i][j].tileValue == 11) {
+        //2048 = tileValue 11 and the sprite frame number is 10
+        //first if statement is the upgrade direction was horizontal, the secon when the direction was vertical
+        if (this.playFieldArray[i][k].tileValue == 11 || this.playFieldArray[k][j].tileValue == 11) {
+            //set won var to true to prevent user input on the play area.
             won = true;
             //open winner meassage
             $("#winModal").modal();
+            //save the best score and replace the best score with the current best score
             this.saveBest()
             bestScore.setText('Best: ' + this.getBest());
         }
@@ -819,13 +850,18 @@ var Game = new Phaser.Class({
                 if ((i == (gameOptions.playFieldSize - 1)) && (j == gameOptions.playFieldSize - 1)) {
                     //player lost, open loser modal, amend score display field
                     $("#loseModal").modal();
+                    //make score text invisible
                     scoreText.visible = false;
+                    // place game over to the scoretext place
                     overText = this.add.text(this.buttonCoordinate(1, 2) - 25, 55, 'Game Over! ', {
                         fontSize: '35px',
                         fill: '#CC3425',
                     });
+                    //save best score
                     this.saveBest()
+                    //update bestscore text 
                     bestScore.setText('Best: ' + this.getBest());
+                    // return true
                     return true;
                 } else if (this.playFieldArray[i][j].tileValue == 0) {
                     return false;
